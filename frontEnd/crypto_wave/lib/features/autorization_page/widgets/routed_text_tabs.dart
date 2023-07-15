@@ -5,10 +5,15 @@ class RoutedTextTabs extends StatefulWidget {
     super.key,
     required this.firstTabName,
     required this.secondTabName,
+    required this.firstTabFunc,
+    required this.secondTabFunc,
   });
 
   final String firstTabName;
   final String secondTabName;
+
+  final void Function() firstTabFunc;
+  final void Function() secondTabFunc;
 
   @override
   State<RoutedTextTabs> createState() => _RoutedTextTabsState();
@@ -32,12 +37,14 @@ class _RoutedTextTabsState extends State<RoutedTextTabs> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
+            widget.firstTabFunc();
             setState(() {
               _selectedTab = widget.firstTabName;
             });
           },
-          child: Container(
+          child: AnimatedContainer(
             padding: const EdgeInsets.only(bottom: 5),
+            duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
               border: _selectedTab == widget.firstTabName
                   ? const Border(
@@ -48,25 +55,30 @@ class _RoutedTextTabsState extends State<RoutedTextTabs> {
                     )
                   : null,
             ),
-            child: Text(
-              widget.firstTabName,
+            child: AnimatedDefaultTextStyle(
               style: _selectedTab == widget.firstTabName
-                  ? theme.textTheme.labelMedium?.copyWith(
+                  ? theme.textTheme.labelMedium!.copyWith(
                       color: Colors.blue,
                     )
-                  : theme.textTheme.labelMedium,
+                  : theme.textTheme.labelMedium!,
+              duration: const Duration(milliseconds: 300),
+              child: Text(
+                widget.firstTabName,
+              ),
             ),
           ),
         ),
         const SizedBox(width: 20),
         GestureDetector(
           onTap: () {
+            widget.secondTabFunc();
             setState(() {
               _selectedTab = widget.secondTabName;
             });
           },
-          child: Container(
+          child: AnimatedContainer(
             padding: const EdgeInsets.only(bottom: 5),
+            duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
               border: _selectedTab == widget.secondTabName
                   ? const Border(
@@ -77,13 +89,16 @@ class _RoutedTextTabsState extends State<RoutedTextTabs> {
                     )
                   : null,
             ),
-            child: Text(
-              widget.secondTabName,
+            child: AnimatedDefaultTextStyle(
               style: _selectedTab == widget.secondTabName
-                  ? theme.textTheme.labelMedium?.copyWith(
+                  ? theme.textTheme.labelMedium!.copyWith(
                       color: Colors.blue,
                     )
-                  : theme.textTheme.labelMedium,
+                  : theme.textTheme.labelMedium!,
+              duration: const Duration(milliseconds: 300),
+              child: Text(
+                widget.secondTabName,
+              ),
             ),
           ),
         ),

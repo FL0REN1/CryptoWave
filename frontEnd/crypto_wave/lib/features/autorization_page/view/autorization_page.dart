@@ -15,6 +15,7 @@ class AutorizationPage extends StatefulWidget {
 }
 
 class _AutorizationPageState extends State<AutorizationPage> {
+  bool selectedTab = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -44,7 +45,28 @@ class _AutorizationPageState extends State<AutorizationPage> {
           ),
         ),
       ),
-      body: const SignUpPage(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+          ), // Здесь устанавливаем нужный отступ
+          child: Column(
+            children: <Widget>[
+              RoutedTextTabs(
+                firstTabName: 'Login with email',
+                secondTabName: 'Create account',
+                firstTabFunc: () => setState(() {
+                  selectedTab = true;
+                }),
+                secondTabFunc: () => setState(() {
+                  selectedTab = false;
+                }),
+              ),
+              selectedTab ? const LogInPage() : const SignUpPage(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
