@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^2.14.0
   json_annotation: ^4.8.1
   auto_route: ^7.7.0
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

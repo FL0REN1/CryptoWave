@@ -21,16 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const WelcomePage(),
       );
     },
-    LoginRoute.name: (routeData) {
+    AutorizationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginPage(),
-      );
-    },
-    RegistrationRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const RegistrationPage(),
+        child: const AutorizationPage(),
       );
     },
   };
@@ -51,29 +45,15 @@ class WelcomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginPage]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [AutorizationPage]
+class AutorizationRoute extends PageRouteInfo<void> {
+  const AutorizationRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          AutorizationRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RegistrationPage]
-class RegistrationRoute extends PageRouteInfo<void> {
-  const RegistrationRoute({List<PageRouteInfo>? children})
-      : super(
-          RegistrationRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RegistrationRoute';
+  static const String name = 'AutorizationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

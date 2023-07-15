@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_wave/features/welcome_page/widgets/widgets.dart';
 import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 
@@ -34,36 +35,36 @@ class WelcomePage extends StatelessWidget {
             const Divider(),
             Image.asset('assets/images/wave_img.png'),
             const Divider(),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 300,
-              height: 100,
-              child: Text(
-                'Start your rich story with Crypto Wave',
-                style: theme.textTheme.titleLarge,
-                textAlign: TextAlign.center,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    width: 300,
+                    height: 100,
+                    child: Text(
+                      'Start your rich story with Crypto Wave',
+                      style: theme.textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  RoutedButton(
+                    routedButtonText: 'Get started',
+                    onPressed: () {
+                      AutoRouter.of(context).push(const AutorizationRoute());
+                    },
+                    width: double.infinity,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'free 100 USDT after registration',
+                    style: theme.textTheme.labelSmall,
+                  ),
+                ],
               ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                AutoRouter.of(context).push(const RegistrationRoute());
-              },
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-              child: const Text('Get Started'),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'free 100 USDT after registration',
-              style: theme.textTheme.labelSmall,
-            ),
+            )
           ],
         ),
       ),
