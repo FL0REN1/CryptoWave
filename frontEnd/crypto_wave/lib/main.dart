@@ -1,4 +1,6 @@
 import 'package:crypto_wave/crypto_wave_app.dart';
+import 'package:crypto_wave/repositories/user_repository/abstract_user_repository.dart';
+import 'package:crypto_wave/repositories/user_repository/user.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +37,9 @@ Future<void> main() async {
 
   // [GET_IT]
   GetIt.I.registerSingleton(talker);
+  GetIt.I.registerLazySingleton<AbstractUserRepository>(
+    () => User(dio: dio),
+  );
 
   // [OTHER]
   WidgetsFlutterBinding.ensureInitialized();

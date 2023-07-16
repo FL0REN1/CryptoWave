@@ -1,13 +1,13 @@
-part of 'autorization_page.dart';
+part of 'authorization_page.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LogInPage extends StatefulWidget {
+  const LogInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LogInPage> createState() => _LogInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,18 +16,14 @@ class _SignUpPageState extends State<SignUpPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: 10),
-          const TextInput(labelText: 'First Name', security: false),
-          const SizedBox(height: 20),
-          const TextInput(labelText: 'Last Name', security: false),
-          const SizedBox(height: 20),
           const TextInput(labelText: 'Email', security: false),
           const SizedBox(height: 20),
           const TextInput(labelText: 'Password', security: true),
           const SizedBox(height: 20),
           const TextInput(labelText: 'Repeat password', security: true),
-          const CheckBox(labelText: 'I Agree to Terms and Conditions'),
+          const SizedBox(height: 20),
           RoutedButton(
-            routedButtonText: 'Create',
+            routedButtonText: 'Log in',
             onPressed: () {},
             width: double.infinity,
           )

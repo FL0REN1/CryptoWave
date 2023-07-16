@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:crypto_wave/features/autorization_page/view/view.dart';
+import 'package:crypto_wave/features/authorization_page/view/view.dart';
 import 'package:crypto_wave/features/welcome_page/view/view.dart';
 
 part 'router.gr.dart';

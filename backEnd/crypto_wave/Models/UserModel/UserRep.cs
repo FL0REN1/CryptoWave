@@ -32,7 +32,7 @@ namespace crypto_wave.Models.UserModel
         /// <returns></returns>
         public bool ChangeUser(User user, int id)
         {
-            User? userModel = _context.Users.FirstOrDefault(m => m.Id == id);
+            User? userModel = _context.Users?.FirstOrDefault(m => m.Id == id);
             if (userModel == null)
             {
                 string message = "[X] Failed to change user because it is empty";
@@ -61,7 +61,7 @@ namespace crypto_wave.Models.UserModel
                 UserRabbitMQ.UserErrorMQ.SendMessage(message);
                 return false;
             }
-            _context.Users.Add(user);
+            _context.Users?.Add(user);
             return true;
         }
 
@@ -72,14 +72,14 @@ namespace crypto_wave.Models.UserModel
         /// <returns></returns>
         public bool DeleteUser(int id)
         {
-            User? user = _context.Users.FirstOrDefault(m => m.Id == id);
+            User? user = _context.Users?.FirstOrDefault(m => m.Id == id);
             if (user == null)
             {
                 string message = "[X] Failed to delete user because it is empty";
                 UserRabbitMQ.UserErrorMQ.SendMessage(message);
                 return false;
             }
-            _context.Users.Remove(user);
+            _context.Users?.Remove(user);
             return true;
         }
 
@@ -87,10 +87,7 @@ namespace crypto_wave.Models.UserModel
         /// [GET_ALL_USERS]
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
+        public IEnumerable<User> GetAllUsers() => _context.Users?.ToList() ?? Enumerable.Empty<User>();
 
         /// <summary>
         /// [GET_USER_BY_ID]
@@ -99,7 +96,7 @@ namespace crypto_wave.Models.UserModel
         /// <returns></returns>
         public User? GetUserById(int id)
         {
-            User? IdUser = _context.Users.FirstOrDefault(x => x.Id == id);
+            User? IdUser = _context.Users?.FirstOrDefault(x => x.Id == id);
             if (IdUser == null)
             {
                 string message = $"[X] DB: [User], has no ID: [{id}]";
@@ -116,7 +113,7 @@ namespace crypto_wave.Models.UserModel
         /// <returns></returns>
         public User? GetUserByLoginAndPassword(UserLoginDto userLoginDto)
         {
-            User? user = _context.Users.FirstOrDefault(i => i.Email == userLoginDto.Email && i.Password == userLoginDto.Password);
+            User? user = _context.Users?.FirstOrDefault(i => i.Email == userLoginDto.Email && i.Password == userLoginDto.Password);
             if (user == null)
             {
                 string message = $"[X] Failed to found user login: [{userLoginDto.Email}], and password: [{userLoginDto.Password}]";
