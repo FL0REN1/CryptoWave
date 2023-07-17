@@ -20,6 +20,7 @@ dependencies:
   json_annotation: ^4.8.1
   auto_route: ^7.7.0
   url_launcher: ^6.1.12
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

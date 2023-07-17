@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'routed_button.dart';
+import '../welcome_page/widgets/routed_button.dart';
 
 class LoadingFailure extends StatefulWidget {
   const LoadingFailure({super.key, required this.restart});

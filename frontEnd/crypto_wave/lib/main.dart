@@ -13,6 +13,7 @@ Future<void> main() async {
   // [INIT]
   final talker = TalkerFlutter.init();
   final dio = Dio();
+  dio.options.contentType = 'application/json';
 
   // [LOGGER]
   dio.interceptors.add(

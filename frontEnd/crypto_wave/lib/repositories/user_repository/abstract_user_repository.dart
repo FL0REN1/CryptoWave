@@ -6,5 +6,5 @@ abstract class AbstractUserRepository {
   Future<UserRead> createUser(UserCreate userCreate);
   Future<UserRead> deleteUser(UserDelete userDelete);
   Future<UserRead> changeUser(UserChange userChange);
-  Future<UserRead> checkUserLogin(UserCheckLogin userCheckLogin);
+  Future<UserRead?> checkUserLogin(UserCheckLogin userCheckLogin);
 }

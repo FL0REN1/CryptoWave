@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/authorization_page/bloc/authorization_bloc.dart';
 import 'package:crypto_wave/features/authorization_page/widgets/widgets.dart';
+import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:crypto_wave/features/welcome_page/widgets/widgets.dart';
-import 'package:crypto_wave/repositories/user_repository/abstract_user_repository.dart';
+import 'package:crypto_wave/repositories/user_repository/models/models.dart';
+import 'package:crypto_wave/repositories/user_repository/user_repository.dart';
+import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 
 part 'log_in_page.dart';
@@ -63,7 +67,6 @@ class _AutorizationPageState extends State<AutorizationPage> {
       body: BlocBuilder<AutorizationBloc, AutorizationState>(
         bloc: _autorizationBloc,
         builder: (context, state) {
-
           if (state is AutorizationLoaded) {
             return SingleChildScrollView(
               child: Padding(
@@ -96,7 +99,7 @@ class _AutorizationPageState extends State<AutorizationPage> {
               ),
             );
           }
-          
+
           return const Center(child: CircularProgressIndicator());
         },
       ),

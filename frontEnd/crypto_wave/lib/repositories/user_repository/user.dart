@@ -1,3 +1,5 @@
+import 'package:crypto_wave/features/helper_page/helper_page.dart';
+
 import 'abstract_user_repository.dart';
 import 'package:dio/dio.dart';
 import 'models/models.dart';
@@ -24,18 +26,18 @@ class User implements AbstractUserRepository {
       'http://10.0.2.2:5235/api/User/id?id=$id',
     );
     final dynamic userResponse = response.data;
-    final UserRead user =
-        userResponse.map((json) => UserRead.fromJson(json)).toList();
+    final UserRead user = userResponse.map((json) => UserRead.fromJson(json));
     return user;
   }
 
   @override
   Future<UserRead> createUser(UserCreate userCreate) async {
-    final Response response =
-        await dio.post('http://10.0.2.2:5235/api/User', data: userCreate);
+    final Response response = await dio.post(
+      'http://10.0.2.2:5235/api/User',
+      data: userCreate.toJson(),
+    );
     final dynamic userResponse = response.data;
-    final UserRead user =
-        userResponse.map((json) => UserRead.fromJson(json)).toList();
+    final UserRead user = UserRead.fromJson(userResponse);
     return user;
   }
 
@@ -44,8 +46,7 @@ class User implements AbstractUserRepository {
     final Response response =
         await dio.delete('http://10.0.2.2:5235/api/User', data: userDelete);
     final dynamic userResponse = response.data;
-    final UserRead user =
-        userResponse.map((json) => UserRead.fromJson(json)).toList();
+    final UserRead user = userResponse.map((json) => UserRead.fromJson(json));
     return user;
   }
 
@@ -54,18 +55,25 @@ class User implements AbstractUserRepository {
     final Response response =
         await dio.put('http://10.0.2.2:5235/api/User/change', data: userChange);
     final dynamic userResponse = response.data;
-    final UserRead user =
-        userResponse.map((json) => UserRead.fromJson(json)).toList();
+    final UserRead user = userResponse.map((json) => UserRead.fromJson(json));
     return user;
   }
 
   @override
-  Future<UserRead> checkUserLogin(UserCheckLogin userCheckLogin) async {
-    final Response response = await dio.get('http://10.0.2.2:5235/api/User/all',
-        data: userCheckLogin);
-    final dynamic userResponse = response.data;
-    final UserRead user =
-        userResponse.map((json) => UserRead.fromJson(json)).toList();
-    return user;
+  Future<UserRead?> checkUserLogin(UserCheckLogin userCheckLogin) async {
+    try {
+      final Response response = await dio.post(
+          'http://10.0.2.2:5235/api/User/login',
+          data: userCheckLogin.toJson());
+      final dynamic userResponse = response.data;
+      final UserRead user = UserRead.fromJson(userResponse);
+      return user;
+    } catch (e) {
+      if (e is DioException && e.response?.statusCode == 404) {
+        throw UserNotFoundException();
+      } else {
+        rethrow;
+      }
+    }
   }
 }
