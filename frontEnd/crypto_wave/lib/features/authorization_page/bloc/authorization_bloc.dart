@@ -19,9 +19,7 @@ class AutorizationBloc extends Bloc<AutorizationEvent, AutorizationState> {
     Emitter<AutorizationState> emit,
   ) async {
     try {
-      if (state is! AutorizationLoaded) {
-        emit(const AutorizationLoading());
-      }
+      if (state is! AutorizationLoaded) emit(const AutorizationLoading());
 
       emit(const AutorizationLoaded());
     } catch (e, st) {

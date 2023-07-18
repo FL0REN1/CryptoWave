@@ -9,6 +9,8 @@ import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import 'repositories/coins_repository/coins_repository.dart';
+
 Future<void> main() async {
   // [INIT]
   final talker = TalkerFlutter.init();
@@ -40,6 +42,9 @@ Future<void> main() async {
   GetIt.I.registerSingleton(talker);
   GetIt.I.registerLazySingleton<AbstractUserRepository>(
     () => User(dio: dio),
+  );
+  GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
+    () => CoinRepository(dio: dio),
   );
 
   // [OTHER]

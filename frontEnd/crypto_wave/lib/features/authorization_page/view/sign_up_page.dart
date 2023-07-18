@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
       }).catchError((e) {
         if (e is UserNotFoundException) {
           GetIt.I<AbstractUserRepository>().createUser(userCreate).then((user) {
-            AutoRouter.of(context).push(HomeRoute(userId: user.id));
+            AutoRouter.of(context).push(const HomeRoute());
             showSuccessToast(context, 'The creation of the user was successful',
                 ToastGravity.BOTTOM);
           });

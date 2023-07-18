@@ -10,15 +10,12 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController repeatPasswordController = TextEditingController();
 
   bool areAllFieldsValid() {
     final emailIsValid = Validators.isValidEmail(emailController.text);
     final passwordIsValid = Validators.isValidPassword(passwordController.text);
-    final repeatPasswordIsValid = Validators.isValidRepeatPassword(
-        repeatPasswordController.text, passwordController.text);
 
-    return emailIsValid && passwordIsValid && repeatPasswordIsValid;
+    return emailIsValid && passwordIsValid;
   }
 
   Future<void> onLogInClick(BuildContext context) async {
@@ -32,7 +29,7 @@ class _LogInPageState extends State<LogInPage> {
           .then((user) {
         showSuccessToast(
             context, 'Account log In was successful', ToastGravity.BOTTOM);
-        AutoRouter.of(context).push(HomeRoute(userId: user!.id));
+        AutoRouter.of(context).push(const HomeRoute());
       }).catchError(
         (error) {
           showErrorSnackBar(context, 'User not found');
@@ -74,19 +71,6 @@ class _LogInPageState extends State<LogInPage> {
               },
               errorCondition: (value) => Validators.isValidPassword(value),
               errorText: Validators.passwordErrorText),
-          const SizedBox(height: 20),
-          TextInput(
-              labelText: 'Repeat password',
-              security: true,
-              giveMeText: repeatPasswordController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  repeatPasswordController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidRepeatPassword(
-                  value, passwordController.text),
-              errorText: Validators.repeatPasswordErrorText),
           const SizedBox(height: 20),
           RoutedButton(
             routedButtonText: 'Log in',

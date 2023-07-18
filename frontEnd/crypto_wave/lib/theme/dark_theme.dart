@@ -28,6 +28,18 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.w700,
       fontSize: 20,
     ),
+    bodySmall: TextStyle(
+      color: Color.fromARGB(179, 255, 255, 255),
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+    ),
+    bodyMedium: TextStyle(
+      color: Color.fromARGB(179, 255, 255, 255),
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.w700,
+      fontSize: 20,
+    ),
   ),
 
   // [BUTTON]
@@ -75,7 +87,7 @@ final darkTheme = ThemeData(
     filled: true,
     fillColor: Colors.transparent,
   ),
-  
+
   checkboxTheme: CheckboxThemeData(
     side: const BorderSide(
       color: Color.fromARGB(255, 53, 143, 163),
