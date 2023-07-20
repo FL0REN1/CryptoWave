@@ -7,12 +7,10 @@ class AutorizationState extends Equatable {
   List<Object?> get props => [];
 }
 
-// Загрузка
 class AutorizationLoading extends AutorizationState {
   const AutorizationLoading();
 }
 
-// Успешная загрузка
 class AutorizationLoaded extends AutorizationState {
   const AutorizationLoaded();
 
@@ -20,7 +18,6 @@ class AutorizationLoaded extends AutorizationState {
   List<Object?> get props => [];
 }
 
-// Загрузка с ошибкой
 class AutorizationLoadingFailure extends AutorizationState {
   const AutorizationLoadingFailure(this.exception);
 

@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             return completer.future;
           },
           child: BlocBuilder<HomeBloc, HomeState>(
-            bloc: _homeBloc, // по какому блоку билдим
+            bloc: _homeBloc,
             builder: (context, state) {
               if (state is HomeLoaded) {
                 final theme = Theme.of(context);

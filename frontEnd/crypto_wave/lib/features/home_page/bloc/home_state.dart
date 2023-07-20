@@ -7,7 +7,6 @@ class HomeState extends Equatable {
   List<Object?> get props => [];
 }
 
-// Загрузка
 class HomeLoading extends HomeState {
   const HomeLoading();
 
@@ -15,7 +14,6 @@ class HomeLoading extends HomeState {
   List<Object?> get props => [];
 }
 
-// Успешная загрузка
 class HomeLoaded extends HomeState {
   final List<Coins> coins;
 
@@ -25,7 +23,6 @@ class HomeLoaded extends HomeState {
   List<Object?> get props => [coins];
 }
 
-// Загрузка с ошибкой
 class HomeLoadingFailure extends HomeState {
   final Object exception;
 
