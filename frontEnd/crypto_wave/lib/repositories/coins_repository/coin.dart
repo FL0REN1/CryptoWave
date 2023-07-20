@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'coins_repository.dart';
 import 'models/models.dart';
 
-class CoinRepository implements AbstractCoinsRepository {
+class Coin implements AbstractCoinsRepository {
   final Dio dio;
 
-  CoinRepository({required this.dio});
+  Coin({required this.dio});
 
   @override
   Future<List<Coins>> getCoinsList() async {

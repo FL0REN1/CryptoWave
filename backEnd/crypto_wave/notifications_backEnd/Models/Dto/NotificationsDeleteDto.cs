@@ -2,7 +2,7 @@
 
 namespace userNotifications.Models.Dto
 {
-    public class NotificationDeleteDto
+    public class NotificationsDeleteDto
     {
         [Required]
         public int Id { get; set; }

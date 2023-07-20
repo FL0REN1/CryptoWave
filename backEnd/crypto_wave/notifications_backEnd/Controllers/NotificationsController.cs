@@ -60,12 +60,12 @@ namespace userNotifications.Controllers
         /// <param name="NotificationsDeleteDto"></param>
         /// <returns></returns>
         [HttpDelete("delete",Name = "DeleteNotification")]
-        public ActionResult<NotificationsReadDto> DeleteNotification(NotificationDeleteDto notificationDeleteDto)
+        public ActionResult<NotificationsReadDto> DeleteNotification(NotificationsDeleteDto notificationsDeleteDto)
         {
-            string logMessage = $"--> Deleting a Notification: {notificationDeleteDto.Id}...";
+            string logMessage = $"--> Deleting a Notification: {notificationsDeleteDto.Id}...";
             NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
 
-            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationDeleteDto);
+            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationsDeleteDto);
             bool success = _repository.DeleteNotification(NotificationsModel.Id);
             if (!success) return NotFound();
             _repository.SaveChanges();

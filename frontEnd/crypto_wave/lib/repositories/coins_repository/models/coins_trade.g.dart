@@ -7,11 +7,11 @@ part of 'coins_trade.dart';
 // **************************************************************************
 
 CoinsTrade _$CoinsTradeFromJson(Map<String, dynamic> json) => CoinsTrade(
-      time: json['time'] as int? ?? 0,
-      high: (json['high'] as num?)?.toDouble() ?? 0.0,
-      low: (json['low'] as num?)?.toDouble() ?? 0.0,
-      open: (json['open'] as num?)?.toDouble() ?? 0.0,
-      close: (json['close'] as num?)?.toDouble() ?? 0.0,
+      time: json['time'] as int,
+      high: (json['high'] as num).toDouble(),
+      low: (json['low'] as num).toDouble(),
+      open: (json['open'] as num).toDouble(),
+      close: (json['close'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$CoinsTradeToJson(CoinsTrade instance) =>
