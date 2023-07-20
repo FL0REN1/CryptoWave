@@ -72,10 +72,13 @@ class _LogInPageState extends State<LogInPage> {
               errorCondition: (value) => Validators.isValidPassword(value),
               errorText: Validators.passwordErrorText),
           const SizedBox(height: 20),
-          RoutedButton(
+          RoutedTextIconButton(
             routedButtonText: 'Log in',
             onPressed: () => onLogInClick(context),
             width: double.infinity,
+            flutterIcon: null,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
           ),
         ],
       ),

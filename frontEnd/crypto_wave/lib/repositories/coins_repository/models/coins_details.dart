@@ -5,7 +5,10 @@ part 'coins_details.g.dart';
 
 @JsonSerializable()
 class CoinsDetails extends Equatable {
-  const CoinsDetails(this.toSymbol, {
+  const CoinsDetails({
+    required this.toSymbol,
+    required this.highDay,
+    required this.lowDay,
     required this.priceInUSD,
     required this.precentInUSD,
     required this.imageUrl,
@@ -19,13 +22,18 @@ class CoinsDetails extends Equatable {
   final double precentInUSD;
   @JsonKey(name: 'IMAGEURL')
   final String imageUrl;
+  @JsonKey(name: 'HIGHDAY')
+  final double highDay;
+  @JsonKey(name: 'LOWDAY')
+  final double lowDay;
 
   String get fullImageUrl => 'https://www.cryptocompare.com/$imageUrl';
+  String get fullPrecentInUSD => precentInUSD.toString().substring(0, 5);
 
   factory CoinsDetails.fromJson(Map<String, dynamic> json) =>
-      _$CoinDetailsFromJson(json);
+      _$CoinsDetailsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CoinDetailsToJson(this);
+  Map<String, dynamic> toJson() => _$CoinsDetailsToJson(this);
 
   @override
   List<Object?> get props => [priceInUSD, precentInUSD, imageUrl];

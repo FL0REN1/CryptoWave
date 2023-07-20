@@ -1,5 +1,5 @@
+import 'package:crypto_wave/features/home_page/widgets/coin_graphic.dart';
 import 'package:crypto_wave/features/home_page/widgets/coin_img_title_subtitle.dart';
-import 'package:crypto_wave/features/home_page/widgets/icon_container.dart';
 import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
 import 'package:flutter/material.dart';
 
@@ -7,38 +7,29 @@ class CoinHugeContainer extends StatefulWidget {
   const CoinHugeContainer({
     super.key,
     required this.coin,
-    required this.greenStyle,
-    required this.redStyle,
   });
   final Coins coin;
-  final bool greenStyle;
-  final bool redStyle;
 
   @override
   State<CoinHugeContainer> createState() => _CoinHugeContainerState();
 }
 
 class _CoinHugeContainerState extends State<CoinHugeContainer> {
-  late List<Color> colors;
-
-  @override
-  void initState() {
-    if (widget.greenStyle) colors = [Colors.blueGrey, Colors.green];
-    if (widget.redStyle) colors = [Colors.blueGrey, Colors.red];
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      width: 250,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.4, 1.0],
-            colors: colors),
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 27, 38, 49),
+            Color.fromARGB(255, 52, 73, 94),
+          ],
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -50,19 +41,36 @@ class _CoinHugeContainerState extends State<CoinHugeContainer> {
                     imgUrl: widget.coin.details.fullImageUrl,
                     titleText: widget.coin.name,
                     subtitleText: widget.coin.details.toSymbol),
-                const SizedBox(width: 70),
-                IconContainer(
-                  svgIconPath: widget.greenStyle
-                      ? 'assets/svg/greenPolygon.svg'
-                      : 'assets/svg/redPolygon.svg',
-                  flutterIcon: null,
-                  padding: 8,
-                  blueStyle: false,
-                  redStyle: widget.redStyle,
-                  greenStyle: widget.greenStyle,
+                const SizedBox(width: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '\$ ${widget.coin.details.highDay} HIGH',
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Text(
+                      "\$ ${widget.coin.details.lowDay} LOW",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ],
                 )
               ],
-            )
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 150,
+              child: CoinGraphic(coin: widget.coin),
+            ),
+            const SizedBox(
+              width: 200,
+              child: Divider(
+                height: 10,
+                thickness: 2,
+              ),
+            ),
+            Text(
+                '${widget.coin.details.priceInUSD}\$ | ${widget.coin.details.fullPrecentInUSD}%')
           ],
         ),
       ),

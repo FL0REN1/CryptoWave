@@ -9,7 +9,9 @@ abstract class HomeEvent extends Equatable {
 
 // Предполагает загрузку данных авторизации. Это событие содержит список пользователей, которые будут загружены из userRepository.
 class LoadHome extends HomeEvent {
-  const LoadHome();
+  final Completer? completer;
+
+  const LoadHome({required this.completer});
 
   @override
   List<Object> get props => [];

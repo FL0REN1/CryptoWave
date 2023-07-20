@@ -289,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flare_flutter:
+    dependency: "direct main"
+    description:
+      name: flare_flutter
+      sha256: "99d63c60f00fac81249ce6410ee015d7b125c63d8278a30da81edf3317a1f6a0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -392,6 +400,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.1"
   io:
     dependency: transitive
     description:
@@ -709,6 +725,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: d2addea39e0d43d718cb7760551aa6a5205354f92711d64ab6c6c0de308c251a
+      url: "https://pub.dev"
+    source: hosted
+    version: "22.1.39"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "83e0937c1d747003e7d2514d093a28101953737a155ad7a1465006a95aa78cd4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "22.1.39"
   talker:
     dependency: transitive
     description:
@@ -765,6 +797,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  timer_builder:
+    dependency: "direct main"
+    description:
+      name: timer_builder
+      sha256: "67c5653a8d9f6ce62fe9121e520736e9da74418a919fe1c0e181b5d2627dbc4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   timing:
     dependency: transitive
     description:

@@ -31,7 +31,7 @@ final darkTheme = ThemeData(
     bodySmall: TextStyle(
       color: Color.fromARGB(179, 255, 255, 255),
       fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       fontSize: 16,
     ),
     bodyMedium: TextStyle(

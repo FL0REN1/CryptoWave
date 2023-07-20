@@ -141,11 +141,14 @@ class _SignUpPageState extends State<SignUpPage> {
               });
             },
           ),
-          RoutedButton(
+          RoutedTextIconButton(
             routedButtonText: 'Create',
             onPressed: () => onSignUp(context),
             width: double.infinity,
-          )
+            flutterIcon: null,
+            paddingVertical: 20,
+            paddingHorizontal: 100,
+          ),
         ],
       ),
     );

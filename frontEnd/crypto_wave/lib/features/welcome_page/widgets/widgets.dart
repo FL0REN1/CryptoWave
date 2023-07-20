@@ -1,1 +1,1 @@
-export 'routed_button.dart';
+export 'routed_text_icon_button.dart';

@@ -48,12 +48,15 @@ class WelcomePage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  RoutedButton(
+                  RoutedTextIconButton(
                     routedButtonText: 'Get started',
                     onPressed: () {
                       AutoRouter.of(context).push(const AutorizationRoute());
                     },
                     width: double.infinity,
+                    paddingVertical: 20,
+                    paddingHorizontal: 100,
+                    flutterIcon: null,
                   ),
                   const SizedBox(
                     height: 20,

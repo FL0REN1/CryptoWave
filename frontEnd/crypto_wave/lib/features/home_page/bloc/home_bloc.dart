@@ -16,13 +16,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   final AbstractCoinsRepository coinsRepository;
+  Timer? _timer;
 
   Future<void> _load(
     LoadHome event,
     Emitter<HomeState> emit,
   ) async {
     try {
-      emit(const HomeLoading());
+      if (state is! HomeLoaded) {
+        emit(const HomeLoading());
+      }
 
       final coinsList = await coinsRepository.getCoinsList();
 
@@ -30,6 +33,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e, st) {
       emit(HomeLoadingFailure(e));
       GetIt.I<Talker>().handle(e, st);
+    } finally {
+      event.completer?.complete();
     }
+  }
+
+  void startUpdatingCoins() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) {
+      add(const LoadHome(completer: null));
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    return super.close();
   }
 }

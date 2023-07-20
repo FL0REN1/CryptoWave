@@ -22,6 +22,9 @@ dependencies:
   url_launcher: ^6.1.12
   fluttertoast: ^8.2.2
   flutter_svg: ^2.0.7
+  syncfusion_flutter_charts: ^22.1.39
+  timer_builder: ^2.0.0
+  flare_flutter: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +39,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
+    - assets/flare/
   fonts:
     - family: Montserrat
       fonts:

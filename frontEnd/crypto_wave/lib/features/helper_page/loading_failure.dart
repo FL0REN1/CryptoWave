@@ -1,6 +1,5 @@
+import 'package:crypto_wave/features/welcome_page/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
-import '../welcome_page/widgets/routed_button.dart';
 
 class LoadingFailure extends StatefulWidget {
   const LoadingFailure({super.key, required this.restart});
@@ -26,10 +25,13 @@ class _LoadingFailureState extends State<LoadingFailure> {
             const SizedBox(height: 10),
             Text('Please try again later', style: theme.textTheme.labelMedium),
             const SizedBox(height: 30),
-            RoutedButton(
+            RoutedTextIconButton(
               onPressed: () => widget.restart(),
               routedButtonText: 'Try again',
               width: double.infinity,
+              flutterIcon: null,
+              paddingHorizontal: 20,
+              paddingVertical: 20,
             ),
           ],
         ),

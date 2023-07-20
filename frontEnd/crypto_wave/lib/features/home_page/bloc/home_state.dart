@@ -22,7 +22,7 @@ class HomeLoaded extends HomeState {
   const HomeLoaded({required this.coins});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [coins];
 }
 
 // Загрузка с ошибкой
