@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "T+13IlYS1+jpL9VTX2Lq+CFM5q/+0TxGBlJoRUJi5vE=",
+  "Source": "news_backend",
+  "BasePath": "_content/news_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
