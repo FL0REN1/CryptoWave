@@ -5,20 +5,27 @@ class CoinImgTitleSubtitle extends StatelessWidget {
       {super.key,
       required this.imgUrl,
       required this.titleText,
-      required this.subtitleText});
+      required this.subtitleText,
+      required this.network});
   final String imgUrl;
   final String titleText;
   final String subtitleText;
+  final bool network;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Row(
       children: <Widget>[
-        Image.network(
-          imgUrl,
-          width: 35,
-        ),
+        network
+            ? Image.network(
+                imgUrl,
+                width: 35,
+              )
+            : Image.asset(
+                imgUrl,
+                width: 35,
+              ),
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -33,6 +33,7 @@ class _CoinSmallContainerState extends State<CoinSmallContainer> {
             imgUrl: widget.coin.details.fullImageUrl,
             titleText: widget.coin.name,
             subtitleText: widget.coin.details.toSymbol,
+            network: true,
           ),
           const SizedBox(width: 20),
           Expanded(

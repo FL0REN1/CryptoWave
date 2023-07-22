@@ -20,7 +20,7 @@ class NotificationsLoaded extends NotificationsState {
   const NotificationsLoaded({required this.notifications});
 
   @override
-  List<Object?> get props => [Notifications];
+  List<Object?> get props => [notifications];
 }
 
 class NotificationsLoadingFailure extends NotificationsState {

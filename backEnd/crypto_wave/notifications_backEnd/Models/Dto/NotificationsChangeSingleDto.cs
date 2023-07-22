@@ -2,9 +2,9 @@
 
 namespace userNotifications.Models.Dto
 {
-    public class NotificationsChangeDto
+    public class NotificationsChangeSingleDto
     {
         [Required]
-        public int UserId { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -11,7 +11,8 @@ class NotificationsRead extends Equatable {
       required this.date,
       required this.userId,
       required this.type,
-      required this.isRead});
+      required this.isRead,
+      required this.isChoosen});
 
   final int id;
   final int userId;
@@ -19,9 +20,19 @@ class NotificationsRead extends Equatable {
   final String text;
   final String date;
   final bool isRead;
+  final bool isChoosen;
 
-  factory NotificationsRead.fromJson(Map<String, dynamic> json) =>
-      _$NotificationsReadFromJson(json);
+  factory NotificationsRead.fromJson(Map<String, dynamic> json) {
+    return NotificationsRead(
+      id: json['id'] as int? ?? 0,
+      text: json['text'] as String? ?? '',
+      date: json['date'] as String? ?? '',
+      userId: json['userId'] as int? ?? 0,
+      type: json['type'] as String? ?? '',
+      isRead: json['isRead'] as bool? ?? false,
+      isChoosen: json['isChoosen'] as bool? ?? false,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$NotificationsReadToJson(this);
 

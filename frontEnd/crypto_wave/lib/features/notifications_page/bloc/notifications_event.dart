@@ -15,3 +15,23 @@ class LoadNotifications extends NotificationsEvent {
   @override
   List<Object> get props => [];
 }
+
+class DeleteNotifications extends NotificationsEvent {
+  final int id;
+  final Completer? completer;
+
+  const DeleteNotifications({required this.id, required this.completer});
+
+  @override
+  List<Object> get props => [id];
+}
+
+class ChangeNotifications extends NotificationsEvent {
+  final int id;
+  final Completer? completer;
+
+  const ChangeNotifications({required this.id, required this.completer});
+
+  @override
+  List<Object> get props => [id];
+}

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7w0XkzkvCZhI6Lf8vQcC0cdCx1lIE/BF3fzzy+B/1kZ3jBUm5rG7CB8869E9IV4Jq5HrQg3BjCQ/rrAqzDRhHQ==",
+  "dgSpecHash": "BNrtDxOtRXpXE1iu0Q7qU/fQP6H8HCpvrAfz6KtVrqRESIy20pffSC04cyrcqtsZm+ejSjfNshDCOn9XJhyhSg==",
   "success": true,
-  "projectFilePath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_notifications_backEnd\\userNotifications.csproj",
+  "projectFilePath": "D:\\CryptoWave\\backEnd\\crypto_wave\\notifications_backEnd\\userNotifications.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

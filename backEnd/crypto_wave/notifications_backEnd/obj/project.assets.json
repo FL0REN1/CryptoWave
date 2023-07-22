@@ -3968,11 +3968,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_notifications_backEnd\\userNotifications.csproj",
+      "projectUniqueName": "D:\\CryptoWave\\backEnd\\crypto_wave\\notifications_backEnd\\userNotifications.csproj",
       "projectName": "userNotifications",
-      "projectPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_notifications_backEnd\\userNotifications.csproj",
+      "projectPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\notifications_backEnd\\userNotifications.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_notifications_backEnd\\obj\\",
+      "outputPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\notifications_backEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

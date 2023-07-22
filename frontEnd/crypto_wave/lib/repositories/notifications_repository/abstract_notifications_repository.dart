@@ -6,5 +6,6 @@ abstract class AbstractNotificationsRepository {
   Future<NotificationsRead> createNotifications(NotificationsCreate notificationsCreate);
   Future<NotificationsRead> deleteNotifications(NotificationsDelete notificationsDelete);
   Future<NotificationsRead> deleteAllNotifications(NotificationsDeleteAll ntificationsDeleteAll);
-  Future<NotificationsRead> changeAllNotifications(NotificationsChange notificationsChange);
+  Future<NotificationsRead> changeAllNotifications(NotificationsChangeAll notificationsChange);
+  Future<NotificationsRead> changeSingleNotification(NotificationsChangeSingle notificationsChange);
 }

@@ -103,18 +103,42 @@ namespace userNotifications.Controllers
         }
 
         /// <summary>
-        /// [CHANGE_NOTIFICATIONS]
+        /// [CHANGE_ALL_NOTIFICATIONS]
         /// </summary>
         /// <param name="NotificationsChangeDto"></param>
         /// <returns></returns>
-        [HttpPut("change", Name = "ChangeNotification")]
-        public ActionResult<NotificationsReadDto> ChangeNotification(NotificationsChangeDto NotificationsChangeDto)
+        [HttpPut("changeAll", Name = "ChangeAllNotifications")]
+        public ActionResult<NotificationsReadDto> ChangeAllNotifications(NotificationsChangeAllDto NotificationsChangeDto)
         {
             string logMessage = $"--> Changing all Notifications: {NotificationsChangeDto.UserId}...";
             NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
 
             Notifications NotificationsModel = _mapper.Map<Notifications>(NotificationsChangeDto);
             bool success = _repository.ChangeAllNotifications(NotificationsChangeDto.UserId);
+            if (!success) return NotFound();
+            _repository.SaveChanges();
+
+            NotificationsReadDto NotificationsReadDto = _mapper.Map<NotificationsReadDto>(NotificationsModel);
+
+            string logMessage2 = $"--> Notification changed successfully ! [{NotificationsReadDto.Id}] : {NotificationsReadDto.Date}";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage2);
+
+            return Ok(NotificationsReadDto);
+        }
+
+        /// <summary>
+        /// [CHANGE_ALL_NOTIFICATIONS]
+        /// </summary>
+        /// <param name="NotificationsChangeDto"></param>
+        /// <returns></returns>
+        [HttpPut("changeSingle", Name = "ChangeSingleNotification")]
+        public ActionResult<NotificationsReadDto> ChangeSingleNotification(NotificationsChangeSingleDto NotificationsChangeDto)
+        {
+            string logMessage = $"--> Changing all Notifications: {NotificationsChangeDto.Id}...";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
+
+            Notifications NotificationsModel = _mapper.Map<Notifications>(NotificationsChangeDto);
+            bool success = _repository.ChangeSingleNotification(NotificationsChangeDto.Id);
             if (!success) return NotFound();
             _repository.SaveChanges();
 

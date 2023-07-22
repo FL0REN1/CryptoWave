@@ -20,7 +20,8 @@ namespace userNotifications.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    IsRead = table.Column<bool>(type: "bit", nullable: false)
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    IsChoosen = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

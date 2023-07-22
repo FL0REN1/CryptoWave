@@ -38,9 +38,11 @@ class _CoinHugeContainerState extends State<CoinHugeContainer> {
             Row(
               children: <Widget>[
                 CoinImgTitleSubtitle(
-                    imgUrl: widget.coin.details.fullImageUrl,
-                    titleText: widget.coin.name,
-                    subtitleText: widget.coin.details.toSymbol),
+                  imgUrl: widget.coin.details.fullImageUrl,
+                  titleText: widget.coin.name,
+                  subtitleText: widget.coin.details.toSymbol,
+                  network: true,
+                ),
                 const SizedBox(width: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

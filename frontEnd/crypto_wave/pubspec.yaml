@@ -25,6 +25,7 @@ dependencies:
   syncfusion_flutter_charts: ^22.1.39
   timer_builder: ^2.0.0
   flare_flutter: ^3.0.2
+  flutter_shake_animated: ^0.0.5
 
 dev_dependencies:
   flutter_test:

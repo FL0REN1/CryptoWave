@@ -16,5 +16,7 @@ namespace userNotifications.Models.Dto
         public int UserId { get; set; }
         [Required]
         public bool IsRead { get; set; }
+        [Required]
+        public bool IsChoosen { get; set; }
     }
 }

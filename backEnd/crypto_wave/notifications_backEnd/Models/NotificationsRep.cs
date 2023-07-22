@@ -110,6 +110,28 @@ namespace userNotifications.Models
         }
 
         /// <summary>
+        /// [CHANGE_SINGLE_NOTIFICATION]
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool ChangeSingleNotification(int Id)
+        {
+            var notificationsToChange = _context.Notifications?.FirstOrDefault(n => n.Id == Id);
+
+            if (notificationsToChange == null)
+            {
+                string message = $"[X] Failed to change notifications for user with ID: {Id}. User not found or no matching notifications.";
+                NotificationsRabbitMQ.NotificationsErrorMQ.SendMessage(message);
+                return false;
+            }
+
+            notificationsToChange.IsChoosen = !notificationsToChange.IsChoosen;
+
+            return true;
+        }
+
+        /// <summary>
         /// [GET_ALL_NOTIFICATIONS]
         /// </summary>
         /// <param name="userId"></param>

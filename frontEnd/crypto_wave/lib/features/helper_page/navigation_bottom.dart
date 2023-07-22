@@ -1,16 +1,18 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/helper_page/route_icon_top_text_bottom.dart';
+import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 
 class NavigationBottom extends StatefulWidget {
-  const NavigationBottom({super.key});
+  const NavigationBottom({super.key, required this.selectedIndex});
+
+  final int selectedIndex;
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();
 }
 
 class _NavigationBottomState extends State<NavigationBottom> {
-  int selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,10 +39,11 @@ class _NavigationBottomState extends State<NavigationBottom> {
               index: 0,
               func: () {
                 setState(() {
-                  selectedIndex = 0;
+                  widget.selectedIndex == 0;
                 });
+                AutoRouter.of(context).push(const HomeRoute());
               },
-              isSelected: 0 == selectedIndex,
+              isSelected: 0 == widget.selectedIndex,
             ),
             RouteIconTopTextBottom(
               svgIconPath: 'assets/svg/news.svg',
@@ -49,10 +52,11 @@ class _NavigationBottomState extends State<NavigationBottom> {
               index: 1,
               func: () {
                 setState(() {
-                  selectedIndex = 1;
+                  widget.selectedIndex == 1;
                 });
+                AutoRouter.of(context).push(const NewsRoute());
               },
-              isSelected: 1 == selectedIndex,
+              isSelected: 1 == widget.selectedIndex,
             ),
             RouteIconTopTextBottom(
               svgIconPath: 'assets/svg/earn.svg',
@@ -61,10 +65,10 @@ class _NavigationBottomState extends State<NavigationBottom> {
               index: 2,
               func: () {
                 setState(() {
-                  selectedIndex = 2;
+                  widget.selectedIndex == 2;
                 });
               },
-              isSelected: 2 == selectedIndex,
+              isSelected: 2 == widget.selectedIndex,
             ),
             RouteIconTopTextBottom(
               svgIconPath: 'assets/svg/profile.svg',
@@ -73,10 +77,10 @@ class _NavigationBottomState extends State<NavigationBottom> {
               index: 3,
               func: () {
                 setState(() {
-                  selectedIndex = 3;
+                  widget.selectedIndex == 3;
                 });
               },
-              isSelected: 3 == selectedIndex,
+              isSelected: 3 == widget.selectedIndex,
             ),
           ],
         ),

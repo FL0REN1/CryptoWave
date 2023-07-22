@@ -11,7 +11,7 @@ using userNotifications.Models;
 namespace userNotifications.Migrations
 {
     [DbContext(typeof(NotificationsContext))]
-    [Migration("20230720114633_initial")]
+    [Migration("20230722111911_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace userNotifications.Migrations
                     b.Property<string>("Date")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsChoosen")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");

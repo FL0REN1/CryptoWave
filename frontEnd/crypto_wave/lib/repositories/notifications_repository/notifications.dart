@@ -9,14 +9,28 @@ class Notifications implements AbstractNotificationsRepository {
 
   @override
   Future<NotificationsRead> changeAllNotifications(
-      NotificationsChange notificationsChange) async {
+      NotificationsChangeAll notificationsChangeAll) async {
     final Response response = await dio.put(
-      'http://10.0.2.2:5217/api/Notifications/change',
-      data: notificationsChange,
+      'http://10.0.2.2:5217/api/Notifications/changeAll',
+      data: notificationsChangeAll,
     );
     final dynamic notificationsResponse = response.data;
     final NotificationsRead notifications = notificationsResponse.map(
       (json) => NotificationsRead.fromJson(json),
+    );
+    return notifications;
+  }
+
+  @override
+  Future<NotificationsRead> changeSingleNotification(
+      NotificationsChangeSingle notificationsChangeSingle) async {
+    final Response response = await dio.put(
+      'http://10.0.2.2:5217/api/Notifications/changeSingle',
+      data: notificationsChangeSingle,
+    );
+    final dynamic notificationsResponse = response.data;
+    final NotificationsRead notifications = NotificationsRead.fromJson(
+      notificationsResponse
     );
     return notifications;
   }
@@ -57,9 +71,8 @@ class Notifications implements AbstractNotificationsRepository {
       data: notificationsDelete,
     );
     final dynamic notificationsResponse = response.data;
-    final NotificationsRead notifications = notificationsResponse.map(
-      (json) => NotificationsRead.fromJson(json),
-    );
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
     return notifications;
   }
 

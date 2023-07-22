@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/authorization_page/view/view.dart';
 import 'package:crypto_wave/features/home_page/view/view.dart';
+import 'package:crypto_wave/features/news_page/view/view.dart';
+import 'package:crypto_wave/features/notifications_page/views/views.dart';
 import 'package:crypto_wave/features/welcome_page/view/view.dart';
 
 part 'router.gr.dart';
@@ -12,5 +14,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: AutorizationRoute.page),
         AutoRoute(page: HomeRoute.page, path: '/'),
+        AutoRoute(page: NotificationsRoute.page),
+        AutoRoute(page: NewsRoute.page),
       ];
 }

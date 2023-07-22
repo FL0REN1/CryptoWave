@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
-import 'package:crypto_wave/features/helper_page/navigation_bottom.dart';
 import 'package:crypto_wave/features/home_page/bloc/bloc.dart';
 import 'package:crypto_wave/features/home_page/widgets/widgets.dart';
 import 'package:crypto_wave/repositories/coins_repository/coins_repository.dart';
+import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _homeBloc.add(const LoadHome(completer: null));
 
-    _homeBloc.startUpdatingCoins();
+    //_homeBloc.startUpdatingCoins();
 
     super.initState();
   }
@@ -88,7 +88,11 @@ class _HomePageState extends State<HomePage> {
                                     svgIconPath: 'assets/svg/notification.svg',
                                     flutterIcon: null,
                                     padding: 8,
-                                    func: () {},
+                                    func: () {
+                                      AutoRouter.of(context).push(
+                                        const NotificationsRoute(),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -147,7 +151,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 10),
                     const Expanded(
-                      child: NavigationBottom(),
+                      child: NavigationBottom(
+                        selectedIndex: 0,
+                      ),
                     ),
                   ],
                 );
