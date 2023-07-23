@@ -100,7 +100,8 @@ class _NotificationsMessageState extends State<NotificationsMessage> {
               InkWell(
                 onTap: () {
                   widget.notificationsBloc.add(
-                      DeleteNotifications(id: widget.index, completer: null));
+                    DeleteNotificationById(id: widget.index, completer: null),
+                  );
                 },
                 child: const Icon(
                   Icons.clear,

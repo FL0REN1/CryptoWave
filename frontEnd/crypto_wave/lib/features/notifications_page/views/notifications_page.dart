@@ -21,6 +21,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final _notificationsBloc = NotificationsBloc(
     GetIt.I<AbstractNotificationsRepository>(),
   );
+  late int userId;
+  bool isContentLoaded = false;
   @override
   void initState() {
     _notificationsBloc.add(const LoadNotifications(completer: null));
@@ -34,6 +36,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       onRefresh: () async {
         final completer = Completer();
         _notificationsBloc.add(LoadNotifications(completer: completer));
+        isContentLoaded = false;
         return completer.future;
       },
       child: Scaffold(
@@ -43,23 +46,41 @@ class _NotificationsPageState extends State<NotificationsPage> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          actions: [
-            IconButton(
-              splashRadius: 20,
-              icon: const Icon(Icons.clear_all, color: Colors.white),
-              onPressed: () {},
-            ),
-            IconButton(
-              splashRadius: 20,
-              icon: const Icon(Icons.delete_outlined, color: Colors.white),
-              onPressed: () {},
-            ),
-          ],
+          actions: isContentLoaded // Use the boolean variable here
+              ? [
+                  IconButton(
+                    splashRadius: 20,
+                    icon: const Icon(Icons.clear_all, color: Colors.white),
+                    onPressed: () {
+                      _notificationsBloc.add(
+                        ChangeNotificationsAllToChoosen(
+                          userId: userId,
+                          completer: null,
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    splashRadius: 20,
+                    icon:
+                        const Icon(Icons.delete_outlined, color: Colors.white),
+                    onPressed: () {
+                      _notificationsBloc.add(
+                        DeleteNotificationsChoosen(
+                          userId: userId,
+                          completer: null,
+                        ),
+                      );
+                    },
+                  ),
+                ]
+              : [],
         ),
         body: BlocBuilder<NotificationsBloc, NotificationsState>(
             bloc: _notificationsBloc,
             builder: (context, state) {
               if (state is NotificationsLoaded) {
+                isContentLoaded = true;
                 return ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -69,6 +90,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     final message = state.notifications[index];
                     bool isLastElement =
                         index == state.notifications.length - 1;
+                    userId = message.userId;
                     return Container(
                       margin: isLastElement
                           ? EdgeInsets.zero
@@ -84,7 +106,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         onDoubleTap: () {
                           setState(() {
                             _notificationsBloc.add(
-                              ChangeNotifications(
+                              ChangeNotificationToChoosen(
                                 id: message.id,
                                 completer: null,
                               ),
@@ -98,6 +120,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               }
 
               if (state is NotificationsLoadingFailure) {
+                isContentLoaded = false;
                 return LoadingFailure(
                   restart: () => _notificationsBloc.add(
                     const LoadNotifications(completer: null),

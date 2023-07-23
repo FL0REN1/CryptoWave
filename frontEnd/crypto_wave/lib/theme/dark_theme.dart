@@ -40,6 +40,12 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.w700,
       fontSize: 20,
     ),
+    bodyLarge: TextStyle(
+      color: Color.fromARGB(179, 255, 255, 255),
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.w700,
+      fontSize: 25,
+    ),
   ),
 
   // [BUTTON]

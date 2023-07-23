@@ -71,7 +71,11 @@ class _HomePageState extends State<HomePage> {
                                             'assets/svg/booksquare.svg',
                                         flutterIcon: null,
                                         padding: 4,
-                                        func: () {},
+                                        func: () {
+                                          AutoRouter.of(context).push(
+                                            const TutorialRoute(),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -81,7 +85,11 @@ class _HomePageState extends State<HomePage> {
                                       svgIconPath: 'assets/svg/search.svg',
                                       flutterIcon: null,
                                       padding: 8,
-                                      func: () {},
+                                      func: () {
+                                        AutoRouter.of(context).push(
+                                          const SearchRoute(),
+                                        );
+                                      },
                                     ),
                                   ),
                                   RoutedIconButton(

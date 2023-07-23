@@ -8,30 +8,41 @@ class Notifications implements AbstractNotificationsRepository {
   Notifications({required this.dio});
 
   @override
-  Future<NotificationsRead> changeAllNotifications(
-      NotificationsChangeAll notificationsChangeAll) async {
+  Future<NotificationsRead> changeAllNotificationsToRead(
+      NotificationsChangeAllToRead notificationsChangeAllToRead) async {
     final Response response = await dio.put(
-      'http://10.0.2.2:5217/api/Notifications/changeAll',
-      data: notificationsChangeAll,
+      'http://10.0.2.2:5217/api/Notifications/changeToReadNotifications',
+      data: notificationsChangeAllToRead,
     );
     final dynamic notificationsResponse = response.data;
-    final NotificationsRead notifications = notificationsResponse.map(
-      (json) => NotificationsRead.fromJson(json),
-    );
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
     return notifications;
   }
 
   @override
-  Future<NotificationsRead> changeSingleNotification(
-      NotificationsChangeSingle notificationsChangeSingle) async {
+  Future<NotificationsRead> changeAllToChoosenNotifications(
+      NotificationsChangeAllToChoosen notificationsChangeAllToChoosen) async {
     final Response response = await dio.put(
-      'http://10.0.2.2:5217/api/Notifications/changeSingle',
-      data: notificationsChangeSingle,
+      'http://10.0.2.2:5217/api/Notifications/changeToChoosenAllNotifications',
+      data: notificationsChangeAllToChoosen,
     );
     final dynamic notificationsResponse = response.data;
-    final NotificationsRead notifications = NotificationsRead.fromJson(
-      notificationsResponse
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
+    return notifications;
+  }
+
+  @override
+  Future<NotificationsRead> changeToChoosenNotification(
+      NotificationsChangeToChoosen notificationsChangeToChoosen) async {
+    final Response response = await dio.put(
+      'http://10.0.2.2:5217/api/Notifications/changeToChoosenNotification',
+      data: notificationsChangeToChoosen,
     );
+    final dynamic notificationsResponse = response.data;
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
     return notifications;
   }
 
@@ -57,9 +68,8 @@ class Notifications implements AbstractNotificationsRepository {
       data: notificationsDeleteAll,
     );
     final dynamic notificationsResponse = response.data;
-    final NotificationsRead notifications = notificationsResponse.map(
-      (json) => NotificationsRead.fromJson(json),
-    );
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
     return notifications;
   }
 
@@ -69,6 +79,19 @@ class Notifications implements AbstractNotificationsRepository {
     final Response response = await dio.delete(
       'http://10.0.2.2:5217/api/Notifications/delete',
       data: notificationsDelete,
+    );
+    final dynamic notificationsResponse = response.data;
+    final NotificationsRead notifications =
+        NotificationsRead.fromJson(notificationsResponse);
+    return notifications;
+  }
+
+  @override
+  Future<NotificationsRead> deleteChoosenNotifications(
+      NotificationsDeleteChoosen notificationsDeleteChoosen) async {
+    final Response response = await dio.delete(
+      'http://10.0.2.2:5217/api/Notifications/deleteChoosen',
+      data: notificationsDeleteChoosen,
     );
     final dynamic notificationsResponse = response.data;
     final NotificationsRead notifications =

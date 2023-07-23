@@ -16,22 +16,66 @@ class LoadNotifications extends NotificationsEvent {
   List<Object> get props => [];
 }
 
-class DeleteNotifications extends NotificationsEvent {
+class DeleteNotificationById extends NotificationsEvent {
   final int id;
   final Completer? completer;
 
-  const DeleteNotifications({required this.id, required this.completer});
+  const DeleteNotificationById({required this.id, required this.completer});
 
   @override
   List<Object> get props => [id];
 }
 
-class ChangeNotifications extends NotificationsEvent {
+class DeleteNotificationsAll extends NotificationsEvent {
+  final int userId;
+  final Completer? completer;
+
+  const DeleteNotificationsAll({required this.userId, required this.completer});
+
+  @override
+  List<Object> get props => [userId];
+}
+
+class DeleteNotificationsChoosen extends NotificationsEvent {
+  final int userId;
+  final Completer? completer;
+
+  const DeleteNotificationsChoosen(
+      {required this.userId, required this.completer});
+
+  @override
+  List<Object> get props => [userId];
+}
+
+class ChangeNotificationToChoosen extends NotificationsEvent {
   final int id;
   final Completer? completer;
 
-  const ChangeNotifications({required this.id, required this.completer});
+  const ChangeNotificationToChoosen(
+      {required this.id, required this.completer});
 
   @override
   List<Object> get props => [id];
+}
+
+class ChangeNotificationsAllToChoosen extends NotificationsEvent {
+  final int userId;
+  final Completer? completer;
+
+  const ChangeNotificationsAllToChoosen(
+      {required this.userId, required this.completer});
+
+  @override
+  List<Object> get props => [userId];
+}
+
+class ChangeNotificationsAllToRead extends NotificationsEvent {
+  final int userId;
+  final Completer? completer;
+
+  const ChangeNotificationsAllToRead(
+      {required this.userId, required this.completer});
+
+  @override
+  List<Object> get props => [userId];
 }

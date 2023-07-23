@@ -14,8 +14,12 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   NotificationsBloc(this.notificationsRepository)
       : super(const NotificationsState()) {
     on<LoadNotifications>(_load);
-    on<DeleteNotifications>(_deleteById);
-    on<ChangeNotifications>(_changeById);
+    on<DeleteNotificationById>(_deleteById);
+    on<DeleteNotificationsAll>(_deleteAll);
+    on<DeleteNotificationsChoosen>(_deleteChoosen);
+    on<ChangeNotificationsAllToChoosen>(_changeAllToChosen);
+    on<ChangeNotificationToChoosen>(_changeToChoosen);
+    on<ChangeNotificationsAllToRead>(_changeAllToRead);
   }
 
   final AbstractNotificationsRepository notificationsRepository;
@@ -41,8 +45,83 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     }
   }
 
+  Future<void> _changeToChoosen(
+    ChangeNotificationToChoosen event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    try {
+      emit(const NotificationsLoading());
+
+      NotificationsChangeToChoosen notificationsChangeToChoosen =
+          NotificationsChangeToChoosen(id: event.id);
+
+      await notificationsRepository
+          .changeToChoosenNotification(notificationsChangeToChoosen);
+
+      final notificationsList =
+          await notificationsRepository.getAllNotifications();
+
+      emit(NotificationsLoaded(notifications: notificationsList));
+    } catch (e, st) {
+      emit(NotificationsLoadingFailure(e));
+      GetIt.I<Talker>().handle(e, st);
+    } finally {
+      event.completer?.complete();
+    }
+  }
+
+  Future<void> _changeAllToChosen(
+    ChangeNotificationsAllToChoosen event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    try {
+      emit(const NotificationsLoading());
+
+      NotificationsChangeAllToChoosen notificationsChangeAllToChoosen =
+          NotificationsChangeAllToChoosen(userId: event.userId);
+
+      await notificationsRepository
+          .changeAllToChoosenNotifications(notificationsChangeAllToChoosen);
+
+      final notificationsList =
+          await notificationsRepository.getAllNotifications();
+
+      emit(NotificationsLoaded(notifications: notificationsList));
+    } catch (e, st) {
+      emit(NotificationsLoadingFailure(e));
+      GetIt.I<Talker>().handle(e, st);
+    } finally {
+      event.completer?.complete();
+    }
+  }
+
+  Future<void> _changeAllToRead(
+    ChangeNotificationsAllToRead event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    try {
+      emit(const NotificationsLoading());
+
+      NotificationsChangeAllToRead notificationsChangeAllToRead =
+          NotificationsChangeAllToRead(userId: event.userId);
+
+      await notificationsRepository
+          .changeAllNotificationsToRead(notificationsChangeAllToRead);
+
+      final notificationsList =
+          await notificationsRepository.getAllNotifications();
+
+      emit(NotificationsLoaded(notifications: notificationsList));
+    } catch (e, st) {
+      emit(NotificationsLoadingFailure(e));
+      GetIt.I<Talker>().handle(e, st);
+    } finally {
+      event.completer?.complete();
+    }
+  }
+
   Future<void> _deleteById(
-    DeleteNotifications event,
+    DeleteNotificationById event,
     Emitter<NotificationsState> emit,
   ) async {
     try {
@@ -64,23 +143,46 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     }
   }
 
-  Future<void> _changeById(
-    ChangeNotifications event,
+  Future<void> _deleteAll(
+    DeleteNotificationsAll event,
     Emitter<NotificationsState> emit,
   ) async {
     try {
       emit(const NotificationsLoading());
 
-      NotificationsChangeSingle notificationsChangeSingle =
-          NotificationsChangeSingle(id: event.id);
+      NotificationsDeleteAll deleteNotificationsAll =
+          NotificationsDeleteAll(userId: event.userId);
 
       await notificationsRepository
-          .changeSingleNotification(notificationsChangeSingle);
+          .deleteAllNotifications(deleteNotificationsAll);
 
       final notificationsList =
           await notificationsRepository.getAllNotifications();
 
-      GetIt.I<Talker>().good(notificationsList);
+      emit(NotificationsLoaded(notifications: notificationsList));
+    } catch (e, st) {
+      emit(NotificationsLoadingFailure(e));
+      GetIt.I<Talker>().handle(e, st);
+    } finally {
+      event.completer?.complete();
+    }
+  }
+
+  Future<void> _deleteChoosen(
+    DeleteNotificationsChoosen event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    try {
+      emit(const NotificationsLoading());
+
+      NotificationsDeleteChoosen deleteNotificationsAll =
+          NotificationsDeleteChoosen(id: event.userId);
+
+      await notificationsRepository
+          .deleteChoosenNotifications(deleteNotificationsAll);
+
+      final notificationsList =
+          await notificationsRepository.getAllNotifications();
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {

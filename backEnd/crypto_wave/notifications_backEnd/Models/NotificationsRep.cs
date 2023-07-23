@@ -83,14 +83,36 @@ namespace userNotifications.Models
         }
 
         /// <summary>
-        /// [CHANGE_NOTIFICATION]
+        /// [DELETE_Choosen_NOTIFICATIONS]
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool DeleteChoosenNotifications(int userId)
+        {
+            List<Notifications> notificationsToDelete = _context.Notifications.Where(m => m.UserId == userId && m.IsChoosen == true).ToList();
+
+            if (notificationsToDelete == null || notificationsToDelete.Count == 0)
+            {
+                string message = "[X] Failed to delete notifications because they are empty or not found";
+                NotificationsRabbitMQ.NotificationsErrorMQ.SendMessage(message);
+                return false;
+            }
+
+            _context.Notifications?.RemoveRange(notificationsToDelete);
+
+            return true;
+        }
+
+        /// <summary>
+        /// [CHANGE_TO_READ_NOTIFICATION]
         /// </summary>
         /// <param name="notifications"></param>
         /// <param name="userId"></param>
         /// <param name="Id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool ChangeAllNotifications(int userId)
+        public bool ChangeToReadAllNotifications(int userId)
         {
             var notificationsToChange = _context.Notifications?.Where(n => n.UserId == userId);
 
@@ -110,12 +132,39 @@ namespace userNotifications.Models
         }
 
         /// <summary>
-        /// [CHANGE_SINGLE_NOTIFICATION]
+        /// [CHANGE_TO_CHOOSEN_ALL_NOTIFICATION]
+        /// </summary>
+        /// <param name="notifications"></param>
+        /// <param name="userId"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool ChangeToChoosenAllNotifications(int userId)
+        {
+            var notificationsToChange = _context.Notifications?.Where(n => n.UserId == userId);
+
+            if (notificationsToChange == null || !notificationsToChange.Any())
+            {
+                string message = $"[X] Failed to change notifications for user with ID: {userId}. User not found or no matching notifications.";
+                NotificationsRabbitMQ.NotificationsErrorMQ.SendMessage(message);
+                return false;
+            }
+
+            foreach (var notification in notificationsToChange)
+            {
+                notification.IsChoosen = !notification.IsChoosen;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// [CHANGE_TO_CHOOSEN_NOTIFICATION]
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool ChangeSingleNotification(int Id)
+        public bool ChangeToChoosenNotification(int Id)
         {
             var notificationsToChange = _context.Notifications?.FirstOrDefault(n => n.Id == Id);
 

@@ -2,9 +2,9 @@
 
 namespace userNotifications.Models.Dto
 {
-    public class NotificationsChangeAllDto
+    public class NotificationsDeleteChoosenDto
     {
         [Required]
-        public int UserId { get; set; }
+        public int userId { get; set; }
     }
 }

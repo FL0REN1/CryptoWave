@@ -45,6 +45,24 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const WelcomePage(),
       );
     },
+    SearchRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchPage(),
+      );
+    },
+    TutorialRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TutorialPage(),
+      );
+    },
+    EarnRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EarnPage(),
+      );
+    },
   };
 }
 
@@ -114,6 +132,48 @@ class WelcomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'WelcomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchPage]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TutorialPage]
+class TutorialRoute extends PageRouteInfo<void> {
+  const TutorialRoute({List<PageRouteInfo>? children})
+      : super(
+          TutorialRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TutorialRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EarnPage]
+class EarnRoute extends PageRouteInfo<void> {
+  const EarnRoute({List<PageRouteInfo>? children})
+      : super(
+          EarnRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EarnRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

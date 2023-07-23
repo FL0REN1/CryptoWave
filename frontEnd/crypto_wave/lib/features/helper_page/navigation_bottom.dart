@@ -67,6 +67,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 setState(() {
                   widget.selectedIndex == 2;
                 });
+                AutoRouter.of(context).push(const EarnRoute());
               },
               isSelected: 2 == widget.selectedIndex,
             ),

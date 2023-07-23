@@ -9,10 +9,12 @@ namespace userNotifications.Models
         {
             CreateMap<Notifications, NotificationsReadDto>();
             CreateMap<NotificationsCreateDto, Notifications>();
-            CreateMap<NotificationsChangeAllDto, Notifications>();
-            CreateMap<NotificationsChangeSingleDto, Notifications>();
+            CreateMap<NotificationsChangeToReadAllDto, Notifications>();
+            CreateMap<NotificationsChangeToChoosenAllDto, Notifications>();
+            CreateMap<NotificationsChangeToChoosenDto, Notifications>();
             CreateMap<NotificationsDeleteDto, Notifications>();
             CreateMap<NotificationsDeleteAllDto, Notifications>();
+            CreateMap<NotificationsDeleteChoosenDto, Notifications>();
         }
     }
 }

@@ -37,6 +37,11 @@ class Validators {
     return false;
   }
 
+  static bool isValidSearch(String value) {
+    if (value.isNotEmpty) return true;
+    return false;
+  }
+
   // [ERROR TEXT]
   static String fullNameErrorText = 'Length: 2 to 49 characters';
   static String emailErrorText =
@@ -44,4 +49,5 @@ class Validators {
   static String passwordErrorText =
       'Length: 10 to 49 characters. \nMust have a small letter, a capital letter, a number and a special character';
   static String repeatPasswordErrorText = 'The passwords must match';
+  static String searchErrorText = 'Text can\'t be null';
 }

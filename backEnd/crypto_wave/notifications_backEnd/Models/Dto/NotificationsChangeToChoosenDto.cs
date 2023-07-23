@@ -2,7 +2,7 @@
 
 namespace userNotifications.Models.Dto
 {
-    public class NotificationsChangeSingleDto
+    public class NotificationsChangeToChoosenDto
     {
         [Required]
         public int Id { get; set; }

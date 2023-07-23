@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notifications_change_single.dart';
+part of 'notifications_change_to_choosen.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-NotificationsChangeSingle _$NotificationsChangeSingleFromJson(
+NotificationsChangeToChoosen _$NotificationsChangeToChoosenFromJson(
         Map<String, dynamic> json) =>
-    NotificationsChangeSingle(
+    NotificationsChangeToChoosen(
       id: json['id'] as int,
     );
 
-Map<String, dynamic> _$NotificationsChangeSingleToJson(
-        NotificationsChangeSingle instance) =>
+Map<String, dynamic> _$NotificationsChangeToChoosenToJson(
+        NotificationsChangeToChoosen instance) =>
     <String, dynamic>{
       'id': instance.id,
     };

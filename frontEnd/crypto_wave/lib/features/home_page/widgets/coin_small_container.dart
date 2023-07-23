@@ -43,10 +43,10 @@ class _CoinSmallContainerState extends State<CoinSmallContainer> {
               child: RoutedTextIconButton(
                 routedButtonText: 'View more',
                 onPressed: () {},
-                width: 200,
+                width: 230,
                 flutterIcon: Icons.auto_graph,
                 paddingVertical: 20,
-                paddingHorizontal: 35,
+                paddingHorizontal: 50,
               ),
             ),
           ),

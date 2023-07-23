@@ -1,8 +1,15 @@
 ﻿using AutoMapper;
+using Azure;
 using crypto_wave.Models.NotificationsModel;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Buffers.Text;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
 using userNotifications.Models;
 using userNotifications.Models.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace userNotifications.Controllers
 {
@@ -103,18 +110,42 @@ namespace userNotifications.Controllers
         }
 
         /// <summary>
-        /// [CHANGE_ALL_NOTIFICATIONS]
+        /// [DELETE_CHOOSEN_NOTIFICATIONS]
+        /// </summary>
+        /// <param name="NotificationsDeleteDto"></param>
+        /// <returns></returns>
+        [HttpDelete("deleteChoosen", Name = "DeleteChoosenNotifications")]
+        public ActionResult<NotificationsReadDto> DeleteChoosenNotifications(NotificationsDeleteChoosenDto notificationsDeleteChoosenDto)
+        {
+            string logMessage = $"--> Deleting all Notifications: {notificationsDeleteChoosenDto.userId}...";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
+
+            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationsDeleteChoosenDto);
+            bool success = _repository.DeleteChoosenNotifications(NotificationsModel.UserId);
+            if (!success) return NotFound();
+            _repository.SaveChanges();
+
+            NotificationsReadDto NotificationsReadDto = _mapper.Map<NotificationsReadDto>(NotificationsModel);
+
+            string logMessage2 = $"--> Notifications deleted successfully ! [{NotificationsReadDto.Id}] : {NotificationsReadDto.Date}";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage2);
+
+            return Ok(NotificationsReadDto);
+        }
+
+        /// <summary>
+        /// [CHANGE_TO_READ_NOTIFICATION]
         /// </summary>
         /// <param name="NotificationsChangeDto"></param>
         /// <returns></returns>
-        [HttpPut("changeAll", Name = "ChangeAllNotifications")]
-        public ActionResult<NotificationsReadDto> ChangeAllNotifications(NotificationsChangeAllDto NotificationsChangeDto)
+        [HttpPut("changeToReadAllNotifications", Name = "ChangeToReadAllNotifications")]
+        public ActionResult<NotificationsReadDto> ChangeToReadAllNotifications(NotificationsChangeToReadAllDto notificationsChangeToReadDto)
         {
-            string logMessage = $"--> Changing all Notifications: {NotificationsChangeDto.UserId}...";
+            string logMessage = $"--> Changing all Notifications: {notificationsChangeToReadDto.UserId}...";
             NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
 
-            Notifications NotificationsModel = _mapper.Map<Notifications>(NotificationsChangeDto);
-            bool success = _repository.ChangeAllNotifications(NotificationsChangeDto.UserId);
+            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationsChangeToReadDto);
+            bool success = _repository.ChangeToReadAllNotifications(notificationsChangeToReadDto.UserId);
             if (!success) return NotFound();
             _repository.SaveChanges();
 
@@ -127,18 +158,42 @@ namespace userNotifications.Controllers
         }
 
         /// <summary>
-        /// [CHANGE_ALL_NOTIFICATIONS]
+        /// [CHANGE_TO_CHOOSEN_NOTIFICATION]
         /// </summary>
         /// <param name="NotificationsChangeDto"></param>
         /// <returns></returns>
-        [HttpPut("changeSingle", Name = "ChangeSingleNotification")]
-        public ActionResult<NotificationsReadDto> ChangeSingleNotification(NotificationsChangeSingleDto NotificationsChangeDto)
+        [HttpPut("changeToChoosenAllNotifications", Name = "ChangeToChoosenAllNotifications")]
+        public ActionResult<NotificationsReadDto> ChangeToChoosenAllNotifications(NotificationsChangeToChoosenAllDto notificationsChangeToAllChoosenDto)
         {
-            string logMessage = $"--> Changing all Notifications: {NotificationsChangeDto.Id}...";
+            string logMessage = $"--> Changing all Notifications: {notificationsChangeToAllChoosenDto.UserId}...";
             NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
 
-            Notifications NotificationsModel = _mapper.Map<Notifications>(NotificationsChangeDto);
-            bool success = _repository.ChangeSingleNotification(NotificationsChangeDto.Id);
+            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationsChangeToAllChoosenDto);
+            bool success = _repository.ChangeToChoosenAllNotifications(notificationsChangeToAllChoosenDto.UserId);
+            if (!success) return NotFound();
+            _repository.SaveChanges();
+
+            NotificationsReadDto NotificationsReadDto = _mapper.Map<NotificationsReadDto>(NotificationsModel);
+
+            string logMessage2 = $"--> Notification changed successfully ! [{NotificationsReadDto.Id}] : {NotificationsReadDto.Date}";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage2);
+
+            return Ok(NotificationsReadDto);
+        }
+
+        /// <summary>
+        /// [CHANGE_TO_CHOOSEN_NOTIFICATION]
+        /// </summary>
+        /// <param name="NotificationsChangeDto"></param>
+        /// <returns></returns>
+        [HttpPut("changeToChoosenNotification", Name = "ChangeToChoosenNotification")]
+        public ActionResult<NotificationsReadDto> ChangeToChoosenNotification(NotificationsChangeToChoosenDto notificationsChangeToChoosenDto)
+        {
+            string logMessage = $"--> Changing all Notifications: {notificationsChangeToChoosenDto.Id}...";
+            NotificationsRabbitMQ.NotificationsActionMQ.SendMessage(logMessage);
+
+            Notifications NotificationsModel = _mapper.Map<Notifications>(notificationsChangeToChoosenDto);
+            bool success = _repository.ChangeToChoosenNotification(notificationsChangeToChoosenDto.Id);
             if (!success) return NotFound();
             _repository.SaveChanges();
 
