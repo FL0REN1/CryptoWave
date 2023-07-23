@@ -16,7 +16,6 @@ dependencies:
   talker_flutter: ^3.1.6
   talker_dio_logger: ^2.2.1
   talker_bloc_logger: ^2.1.0
-  firebase_core: ^2.14.0
   json_annotation: ^4.8.1
   auto_route: ^7.7.0
   url_launcher: ^6.1.12

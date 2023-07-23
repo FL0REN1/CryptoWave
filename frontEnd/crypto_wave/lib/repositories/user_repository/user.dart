@@ -26,7 +26,7 @@ class User implements AbstractUserRepository {
       'http://10.0.2.2:5235/api/User/id?id=$id',
     );
     final dynamic userResponse = response.data;
-    final UserRead user = userResponse.map((json) => UserRead.fromJson(json));
+    final UserRead user = UserRead.fromJson(userResponse);
     return user;
   }
 

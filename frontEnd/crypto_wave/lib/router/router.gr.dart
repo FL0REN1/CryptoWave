@@ -21,6 +21,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AutorizationPage(),
       );
     },
+    EarnRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EarnPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -39,10 +45,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NotificationsPage(),
       );
     },
-    WelcomeRoute.name: (routeData) {
+    ProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const WelcomePage(),
+        child: const ProfilePage(),
       );
     },
     SearchRoute.name: (routeData) {
@@ -57,10 +63,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TutorialPage(),
       );
     },
-    EarnRoute.name: (routeData) {
+    WelcomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EarnPage(),
+        child: const WelcomePage(),
       );
     },
   };
@@ -76,6 +82,20 @@ class AutorizationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AutorizationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EarnPage]
+class EarnRoute extends PageRouteInfo<void> {
+  const EarnRoute({List<PageRouteInfo>? children})
+      : super(
+          EarnRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EarnRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -123,15 +143,15 @@ class NotificationsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [WelcomePage]
-class WelcomeRoute extends PageRouteInfo<void> {
-  const WelcomeRoute({List<PageRouteInfo>? children})
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
       : super(
-          WelcomeRoute.name,
+          ProfileRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'WelcomeRoute';
+  static const String name = 'ProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -165,15 +185,15 @@ class TutorialRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EarnPage]
-class EarnRoute extends PageRouteInfo<void> {
-  const EarnRoute({List<PageRouteInfo>? children})
+/// [WelcomePage]
+class WelcomeRoute extends PageRouteInfo<void> {
+  const WelcomeRoute({List<PageRouteInfo>? children})
       : super(
-          EarnRoute.name,
+          WelcomeRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'EarnRoute';
+  static const String name = 'WelcomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

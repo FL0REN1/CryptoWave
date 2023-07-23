@@ -41,7 +41,9 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 setState(() {
                   widget.selectedIndex == 0;
                 });
-                AutoRouter.of(context).push(const HomeRoute());
+                if (widget.selectedIndex != 0) {
+                  AutoRouter.of(context).push(const HomeRoute());
+                }
               },
               isSelected: 0 == widget.selectedIndex,
             ),
@@ -54,7 +56,9 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 setState(() {
                   widget.selectedIndex == 1;
                 });
-                AutoRouter.of(context).push(const NewsRoute());
+                if (widget.selectedIndex != 1) {
+                  AutoRouter.of(context).push(const NewsRoute());
+                }
               },
               isSelected: 1 == widget.selectedIndex,
             ),
@@ -67,7 +71,9 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 setState(() {
                   widget.selectedIndex == 2;
                 });
-                AutoRouter.of(context).push(const EarnRoute());
+                if (widget.selectedIndex != 2) {
+                  AutoRouter.of(context).push(const EarnRoute());
+                }
               },
               isSelected: 2 == widget.selectedIndex,
             ),
@@ -80,6 +86,9 @@ class _NavigationBottomState extends State<NavigationBottom> {
                 setState(() {
                   widget.selectedIndex == 3;
                 });
+                if (widget.selectedIndex != 3) {
+                  AutoRouter.of(context).push(const ProfileRoute());
+                }
               },
               isSelected: 3 == widget.selectedIndex,
             ),

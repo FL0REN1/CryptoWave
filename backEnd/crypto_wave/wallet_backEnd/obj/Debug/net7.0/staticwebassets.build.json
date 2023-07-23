@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "yAHWmgyf4pelfaUivXvPPM2/8foTVpfdzTDwnVYS3Rk=",
+  "Source": "user_wallet",
+  "BasePath": "_content/user_wallet",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
