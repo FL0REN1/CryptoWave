@@ -141,17 +141,25 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            ListView.separated(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.only(top: 20),
-                              separatorBuilder: (context, state) =>
-                                  const Divider(thickness: 2),
-                              itemCount: state.coins.length,
-                              itemBuilder: (context, i) {
-                                final coin = state.coins[i];
-                                return CoinSmallContainer(coin: coin);
-                              },
+                            SizedBox(
+                              height: 105,
+                              child: ListView.separated(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.only(top: 20),
+                                separatorBuilder: (context, state) =>
+                                    const Divider(thickness: 2),
+                                itemCount: state.coins.length,
+                                itemBuilder: (context, i) {
+                                  final coin = state.coins[i];
+                                  return CoinSmallContainer(
+                                    coin: coin,
+                                    currencyCode: coin.name,
+                                    userId: 5,
+                                    currencyName: coin.name,
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),

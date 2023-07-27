@@ -12,5 +12,7 @@ namespace user_wallet.Models.Dto
         public string? CurrencyName { get; set; }
         [Required]
         public int UserId { get; set; }
+        [Required]
+        public bool IsFavorite { get; set; }
     }
 }

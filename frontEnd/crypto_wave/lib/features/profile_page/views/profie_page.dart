@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
+import 'package:crypto_wave/features/home_page/widgets/coin_small_container.dart';
 import 'package:crypto_wave/features/profile_page/bloc/bloc.dart';
 import 'package:crypto_wave/features/profile_page/widgets/doughunt_chart.dart';
-import 'package:crypto_wave/repositories/user_repository/user_repository.dart';
+import 'package:crypto_wave/repositories/coins_repository/coins_repository.dart';
+import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
+import 'package:crypto_wave/repositories/wallet_repository/abstract_wallet_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -18,12 +21,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final _profileBloc = ProfileBloc(GetIt.I<AbstractUserRepository>());
+  final _profileBloc = ProfileBloc(
+    GetIt.I<AbstractWalletRepository>(),
+    GetIt.I<AbstractCoinsRepository>(),
+  );
   bool eyeVisibility = true;
 
   @override
   void initState() {
-    _profileBloc.add(const LoadProfile(completer: null, id: 7002));
+    _profileBloc.add(const LoadProfile(completer: null, userId: 5));
+
+    _profileBloc.startUpdatingWallet(userId: 5);
+
     super.initState();
   }
 
@@ -35,18 +44,28 @@ class _ProfilePageState extends State<ProfilePage> {
         child: RefreshIndicator(
           onRefresh: () async {
             final completer = Completer();
-            _profileBloc.add(LoadProfile(completer: completer, id: 7002));
+            _profileBloc.add(LoadProfile(completer: completer, userId: 5));
             return completer.future;
           },
           child: BlocBuilder<ProfileBloc, ProfileState>(
             bloc: _profileBloc,
             builder: (context, state) {
               if (state is ProfileLoaded) {
+                List<Coins> filteredCoins = [];
+                for (int i = 0; i < state.coins.length; i++) {
+                  Coins coin = state.coins[i];
+                  for (int j = 0; j < state.wallet.length; j++) {
+                    if (coin.name == state.wallet[j].currencyName) {
+                      filteredCoins.add(coin);
+                    }
+                  }
+                }
                 return Column(
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
@@ -75,31 +94,67 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 30),
+                          Center(
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 500),
+                              width: 350,
+                              height: 300,
+                              margin: const EdgeInsets.only(bottom: 30),
+                              decoration: BoxDecoration(
+                                color: eyeVisibility
+                                    ? const Color.fromRGBO(193, 214, 233, 1)
+                                    : const Color.fromARGB(255, 122, 145, 165),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    spreadRadius: -10,
+                                    blurRadius: 17,
+                                    offset: Offset(-5, -5),
+                                    color: Colors.white,
+                                  ),
+                                  BoxShadow(
+                                    spreadRadius: -2,
+                                    blurRadius: 10,
+                                    offset: Offset(7, 7),
+                                    color: Color.fromRGBO(146, 182, 216, 1),
+                                  ),
+                                ],
+                              ),
+                              child: eyeVisibility
+                                  ? DoughuntChart(
+                                      wallet: state.wallet,
+                                    )
+                                  : const Icon(Icons.hide_image),
+                            ),
+                          ),
+                          Text(
+                            'Your crypto',
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: 105,
+                            child: ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(top: 20),
+                              separatorBuilder: (context, state) =>
+                                  const Divider(thickness: 2),
+                              itemCount: filteredCoins.length,
+                              itemBuilder: (context, i) {
+                                Coins coin = filteredCoins[i];
+                                return CoinSmallContainer(
+                                  coin: coin,
+                                  currencyCode: coin.name,
+                                  userId: 5,
+                                  currencyName: coin.name,
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    Container(
-                      width: 350,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(193, 214, 233, 1),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            spreadRadius: -10,
-                            blurRadius: 17,
-                            offset: Offset(-5, -5),
-                            color: Colors.white,
-                          ),
-                          BoxShadow(
-                            spreadRadius: -2,
-                            blurRadius: 10,
-                            offset: Offset(7, 7),
-                            color: Color.fromRGBO(146, 182, 216, 1),
-                          ),
-                        ],
-                      ),
-                      child: const DoughuntChart(),
                     ),
                     const Spacer(),
                     const NavigationBottom(
@@ -112,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
               if (state is ProfileLoadingFailure) {
                 return LoadingFailure(
                   restart: () => _profileBloc.add(
-                    const LoadProfile(completer: null, id: 7002),
+                    const LoadProfile(completer: null, userId: 5),
                   ),
                 );
               }

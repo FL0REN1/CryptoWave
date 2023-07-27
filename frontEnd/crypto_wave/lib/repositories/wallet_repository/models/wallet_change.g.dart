@@ -7,7 +7,7 @@ part of 'wallet_change.dart';
 // **************************************************************************
 
 WalletChange _$WalletChangeFromJson(Map<String, dynamic> json) => WalletChange(
-      currencyCount: json['currencyCount'] as int,
+      currencyCount: (json['currencyCount'] as num).toDouble(),
       currencyToBuy: json['currencyToBuy'] as String,
       currencyToSell: json['currencyToSell'] as String,
       userId: json['userId'] as int,

@@ -12,7 +12,7 @@ class WalletChange extends Equatable {
     required this.userId,
   });
 
-  final int currencyCount;
+  final double currencyCount;
   final String currencyToBuy;
   final String currencyToSell;
   final int userId;

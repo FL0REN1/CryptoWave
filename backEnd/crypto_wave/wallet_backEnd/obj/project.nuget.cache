@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TKY4TOuA158gVppnrOfxRpcImq0MZxG8eFqArp9noAPBLpAISWbES/d8se3q0vRzCADD36YHBEqx9OvYLcjNQg==",
+  "dgSpecHash": "6u2NKHkxVe+IeGU7jORgbtil7aMBA6i7izcBubIOdLl7AgNyRDtq8oPlK8q8/JFY07qLbm5UD/iZPSYeR4PJCQ==",
   "success": true,
-  "projectFilePath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_wallet\\user_wallet.csproj",
+  "projectFilePath": "D:\\CryptoWave\\backEnd\\crypto_wave\\wallet_backEnd\\user_wallet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

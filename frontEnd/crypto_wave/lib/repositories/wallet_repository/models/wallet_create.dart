@@ -11,7 +11,7 @@ class WalletCreate extends Equatable {
     required this.userId,
   });
 
-  final int currencyCount;
+  final double currencyCount;
   final String currencyName;
   final int userId;
 

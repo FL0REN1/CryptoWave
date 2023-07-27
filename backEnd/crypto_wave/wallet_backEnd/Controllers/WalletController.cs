@@ -51,6 +51,27 @@ namespace user_wallet.Controllers
         }
 
         /// <summary>
+        /// [WALLET_FAVORITE_CHANGE]
+        /// </summary>
+        /// <param name="walletChangeFavoriteDto"></param>
+        /// <returns></returns>
+        [HttpPost("changeFavorite", Name = "WalletFavoriteChange")]
+        public ActionResult<WalletReadDto> WalletFavoriteChange([FromBody] WalletChangeFavoriteDto walletChangeFavoriteDto)
+        {
+            string logMessage = $"--> Wallet changed: {walletChangeFavoriteDto.UserId}...";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage);
+
+            bool success = _repository.ChangeFavoriteWallet(walletChangeFavoriteDto);
+            if (!success) return NotFound();
+            _repository.SaveChanges();
+
+            string logMessage2 = $"--> Wallet changed successfully !";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage2);
+
+            return Ok();
+        }
+
+        /// <summary>
         /// [WALLET_CREATE]
         /// </summary>
         /// <param name="walletCreateDto"></param>
@@ -73,25 +94,44 @@ namespace user_wallet.Controllers
 
             return Ok(userReadDto);
         }
-        
+
 
         /// <summary>
         /// [GET_WALLET_ALL]
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="walletGetAll"></param>
         /// <returns></returns>
         [HttpGet("all", Name = "GetAllWallet")]
-        public ActionResult<IEnumerable<WalletReadDto>> GetWalletAll(int userId)
+        public ActionResult<IEnumerable<WalletReadDto>> GetWalletAll([FromBody] WalletGetAll walletGetAll)
         {
-            string logMessage = "--> Getting all users...";
+            string logMessage = "--> Getting all wallets...";
             WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage);
 
-            var walletModel = _repository.GetAllWallet(userId);
+            var walletModel = _repository.GetAllWallet(walletGetAll);
 
-            string logMessage2 = $"--> Users received successfully !";
+            string logMessage2 = $"--> Wallets received successfully !";
             WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage2);
 
             return Ok(_mapper.Map<IEnumerable<WalletReadDto>>(walletModel));
+        }
+
+        /// <summary>
+        /// [GET_DETAILS_WALLET]
+        /// </summary>
+        /// <param name="walletGetDetails"></param>
+        /// <returns></returns>
+        [HttpGet("details", Name = "GetDetailsWallet")]
+        public ActionResult<WalletReadDto> GetDetailsWallet([FromBody] WalletGetDetails walletGetDetails)
+        {
+            string logMessage = "--> Getting wallet details...";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage);
+
+            var walletModel = _repository.GetDetailsWallet(walletGetDetails);
+
+            string logMessage2 = $"--> Wallet received successfully !";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage2);
+
+            return Ok(_mapper.Map<WalletReadDto>(walletModel));
         }
 
         #endregion

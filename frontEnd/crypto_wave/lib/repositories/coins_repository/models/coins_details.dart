@@ -28,7 +28,7 @@ class CoinsDetails extends Equatable {
   final double lowDay;
 
   String get fullImageUrl => 'https://www.cryptocompare.com/$imageUrl';
-  String get fullPrecentInUSD => precentInUSD.toString().substring(0, 5);
+  String get fullPrecentInUSD => precentInUSD.toStringAsFixed(2);
 
   factory CoinsDetails.fromJson(Map<String, dynamic> json) =>
       _$CoinsDetailsFromJson(json);

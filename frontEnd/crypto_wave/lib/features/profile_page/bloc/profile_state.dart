@@ -15,12 +15,13 @@ class ProfileLoading extends ProfileState {
 }
 
 class ProfileLoaded extends ProfileState {
-  final UserRead user;
+  final List<WalletRead> wallet;
+  final List<Coins> coins;
 
-  const ProfileLoaded({required this.user});
+  const ProfileLoaded({required this.wallet, required this.coins});
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [wallet, coins];
 }
 
 class ProfileLoadingFailure extends ProfileState {

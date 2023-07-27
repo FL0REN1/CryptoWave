@@ -18,8 +18,15 @@ class CoinsTrade extends Equatable {
   final double low;
   final double close;
 
-  factory CoinsTrade.fromJson(Map<String, dynamic> json) =>
-      _$CoinsTradeFromJson(json);
+  factory CoinsTrade.fromJson(Map<String, dynamic> json) {
+    return CoinsTrade(
+      time: json['time'] as int? ?? 0,
+      high: (json['high'] as num?)?.toDouble() ?? 0.0,
+      low: (json['low'] as num?)?.toDouble() ?? 0.0,
+      open: (json['open'] as num?)?.toDouble() ?? 0.0,
+      close: (json['close'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$CoinsTradeToJson(this);
 

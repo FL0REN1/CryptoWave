@@ -8,8 +8,9 @@ namespace user_wallet.Models
 
         bool ChangeWallet(WalletChangeDto changeDto);
         bool CreateWallet(Wallet wallet);
+        bool ChangeFavoriteWallet(WalletChangeFavoriteDto wallet);
 
-
-        IEnumerable<Wallet> GetAllWallet(int userId);
+        IEnumerable<Wallet> GetAllWallet(WalletGetAll walletGetAll);
+        Wallet GetDetailsWallet(WalletGetDetails walletGetDetails);
     }
 }

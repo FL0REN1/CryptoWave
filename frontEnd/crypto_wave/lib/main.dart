@@ -4,6 +4,8 @@ import 'package:crypto_wave/repositories/notifications_repository/abstract_notif
 import 'package:crypto_wave/repositories/notifications_repository/notifications.dart';
 import 'package:crypto_wave/repositories/user_repository/abstract_user_repository.dart';
 import 'package:crypto_wave/repositories/user_repository/user.dart';
+import 'package:crypto_wave/repositories/wallet_repository/abstract_wallet_repository.dart';
+import 'package:crypto_wave/repositories/wallet_repository/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +48,7 @@ Future<void> main() async {
   GetIt.I.registerLazySingleton<AbstractUserRepository>(() => User(dio: dio));
   GetIt.I.registerLazySingleton<AbstractCoinsRepository>(() => Coin(dio: dio));
   GetIt.I.registerLazySingleton<AbstractNewsRepository>(() => News(dio: dio));
+  GetIt.I.registerLazySingleton<AbstractWalletRepository>(() => Wallet(dio: dio));
   GetIt.I.registerLazySingleton<AbstractNotificationsRepository>(
     () => Notifications(dio: dio),
   );

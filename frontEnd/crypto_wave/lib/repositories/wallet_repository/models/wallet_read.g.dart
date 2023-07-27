@@ -8,9 +8,10 @@ part of 'wallet_read.dart';
 
 WalletRead _$WalletReadFromJson(Map<String, dynamic> json) => WalletRead(
       id: json['id'] as int,
-      currencyCount: json['currencyCount'] as int,
+      currencyCount: (json['currencyCount'] as num).toDouble(),
       currencyName: json['currencyName'] as String,
       userId: json['userId'] as int,
+      isFavorite: json['isFavorite'] as bool,
     );
 
 Map<String, dynamic> _$WalletReadToJson(WalletRead instance) =>
@@ -18,5 +19,6 @@ Map<String, dynamic> _$WalletReadToJson(WalletRead instance) =>
       'id': instance.id,
       'currencyCount': instance.currencyCount,
       'currencyName': instance.currencyName,
+      'isFavorite': instance.isFavorite,
       'userId': instance.userId,
     };

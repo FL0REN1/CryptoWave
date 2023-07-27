@@ -10,11 +10,13 @@ class WalletRead extends Equatable {
     required this.currencyCount,
     required this.currencyName,
     required this.userId,
+    required this.isFavorite,
   });
 
   final int id;
-  final int currencyCount;
+  final double currencyCount;
   final String currencyName;
+  final bool isFavorite;
   final int userId;
 
   factory WalletRead.fromJson(Map<String, dynamic> json) =>

@@ -3968,11 +3968,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_wallet\\user_wallet.csproj",
+      "projectUniqueName": "D:\\CryptoWave\\backEnd\\crypto_wave\\wallet_backEnd\\user_wallet.csproj",
       "projectName": "user_wallet",
-      "projectPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_wallet\\user_wallet.csproj",
+      "projectPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\wallet_backEnd\\user_wallet.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\user_wallet\\obj\\",
+      "outputPath": "D:\\CryptoWave\\backEnd\\crypto_wave\\wallet_backEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

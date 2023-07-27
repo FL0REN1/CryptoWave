@@ -73,22 +73,29 @@ class _SearchPageState extends State<SearchPage> {
                       .toLowerCase()
                       .contains(searchController.text.toLowerCase()))
                   .toList();
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: <Widget>[
-                    ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      separatorBuilder: (context, state) =>
-                          const Divider(thickness: 2),
-                      itemCount: filteredCoins.length,
-                      itemBuilder: (context, i) {
-                        final coin = filteredCoins[i];
-                        return CoinSmallContainer(coin: coin);
-                      },
-                    ),
-                  ],
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: <Widget>[
+                      ListView.separated(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        separatorBuilder: (context, state) =>
+                            const Divider(thickness: 2),
+                        itemCount: filteredCoins.length,
+                        itemBuilder: (context, i) {
+                          final coin = filteredCoins[i];
+                          return CoinSmallContainer(
+                            coin: coin,
+                            currencyCode: coin.name,
+                            userId: 5,
+                            currencyName: coin.name,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

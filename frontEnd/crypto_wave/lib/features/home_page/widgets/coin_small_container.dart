@@ -1,11 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/home_page/widgets/widgets.dart';
 import 'package:crypto_wave/features/welcome_page/widgets/widgets.dart';
 import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
+import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 
 class CoinSmallContainer extends StatefulWidget {
-  const CoinSmallContainer({super.key, required this.coin});
+  const CoinSmallContainer({
+    super.key,
+    required this.coin,
+    required this.currencyCode,
+    required this.userId,
+    required this.currencyName,
+  });
   final Coins coin;
+  final String currencyCode;
+  final int userId;
+  final String currencyName;
 
   @override
   State<CoinSmallContainer> createState() => _CoinSmallContainerState();
@@ -37,16 +48,22 @@ class _CoinSmallContainerState extends State<CoinSmallContainer> {
           ),
           const SizedBox(width: 20),
           Expanded(
-            // Added Expanded widget
             child: Align(
               alignment: Alignment.centerRight, // Align to the right
               child: RoutedTextIconButton(
                 routedButtonText: 'View more',
-                onPressed: () {},
+                onPressed: () {
+                  AutoRouter.of(context).push(
+                    CoinRoute(
+                        currencyCode: widget.currencyCode,
+                        userId: widget.userId,
+                        currencyName: widget.currencyName),
+                  );
+                },
                 width: 230,
                 flutterIcon: Icons.auto_graph,
                 paddingVertical: 20,
-                paddingHorizontal: 50,
+                paddingHorizontal: 45,
               ),
             ),
           ),

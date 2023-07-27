@@ -69,6 +69,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const WelcomePage(),
       );
     },
+    CoinRoute.name: (routeData) {
+      final args = routeData.argsAs<CoinRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CoinPage(
+          key: args.key,
+          currencyCode: args.currencyCode,
+          userId: args.userId,
+          currencyName: args.currencyName,
+        ),
+      );
+    },
   };
 }
 
@@ -196,4 +208,51 @@ class WelcomeRoute extends PageRouteInfo<void> {
   static const String name = 'WelcomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CoinPage]
+class CoinRoute extends PageRouteInfo<CoinRouteArgs> {
+  CoinRoute({
+    Key? key,
+    required String currencyCode,
+    required int userId,
+    required String currencyName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CoinRoute.name,
+          args: CoinRouteArgs(
+            key: key,
+            currencyCode: currencyCode,
+            userId: userId,
+            currencyName: currencyName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CoinRoute';
+
+  static const PageInfo<CoinRouteArgs> page = PageInfo<CoinRouteArgs>(name);
+}
+
+class CoinRouteArgs {
+  const CoinRouteArgs({
+    this.key,
+    required this.currencyCode,
+    required this.userId,
+    required this.currencyName,
+  });
+
+  final Key? key;
+
+  final String currencyCode;
+
+  final int userId;
+
+  final String currencyName;
+
+  @override
+  String toString() {
+    return 'CoinRouteArgs{key: $key, currencyCode: $currencyCode, userId: $userId, currencyName: $currencyName}';
+  }
 }

@@ -9,7 +9,10 @@ namespace user_wallet.Models
          {
              CreateMap<Wallet, WalletReadDto>();
              CreateMap<WalletChangeDto, Wallet>();
+             CreateMap<WalletChangeFavoriteDto, Wallet>();
              CreateMap<WalletCreateDto, Wallet>();
-        }
+             CreateMap<WalletGetAll, Wallet>();
+             CreateMap<WalletGetDetails, Wallet>();
+         }
     }
 }

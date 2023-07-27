@@ -7,7 +7,7 @@ part of 'wallet_create.dart';
 // **************************************************************************
 
 WalletCreate _$WalletCreateFromJson(Map<String, dynamic> json) => WalletCreate(
-      currencyCount: json['currencyCount'] as int,
+      currencyCount: (json['currencyCount'] as num).toDouble(),
       currencyName: json['currencyName'] as String,
       userId: json['userId'] as int,
     );

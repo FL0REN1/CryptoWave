@@ -11,7 +11,7 @@ using user_wallet.Models;
 namespace user_wallet.Migrations
 {
     [DbContext(typeof(WalletContext))]
-    [Migration("20230723155540_initial")]
+    [Migration("20230726163946_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace user_wallet.Migrations
                     b.Property<string>("CurrencyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
