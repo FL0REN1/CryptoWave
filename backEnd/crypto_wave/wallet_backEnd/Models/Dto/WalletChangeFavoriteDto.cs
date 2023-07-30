@@ -7,6 +7,6 @@ namespace user_wallet.Models.Dto
         [Required]
         public int UserId { get; set; }
         [Required]
-        public int Id { get; set; }
+        public string? CurrencyName { get; set; }
     }
 }

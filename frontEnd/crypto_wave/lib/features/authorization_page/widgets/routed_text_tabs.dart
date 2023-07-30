@@ -7,6 +7,8 @@ class RoutedTextTabs extends StatefulWidget {
     required this.secondTabName,
     required this.firstTabFunc,
     required this.secondTabFunc,
+    required this.width,
+    required this.isFirstTabSelect,
   });
 
   final String firstTabName;
@@ -14,6 +16,10 @@ class RoutedTextTabs extends StatefulWidget {
 
   final void Function() firstTabFunc;
   final void Function() secondTabFunc;
+
+  final double width;
+
+  final bool isFirstTabSelect;
 
   @override
   State<RoutedTextTabs> createState() => _RoutedTextTabsState();
@@ -25,7 +31,7 @@ class _RoutedTextTabsState extends State<RoutedTextTabs> {
   @override
   void initState() {
     super.initState();
-    _selectedTab = widget.secondTabName;
+    widget.isFirstTabSelect ? _selectedTab = widget.firstTabName : _selectedTab = widget.secondTabName;
   }
 
   @override
@@ -68,7 +74,7 @@ class _RoutedTextTabsState extends State<RoutedTextTabs> {
             ),
           ),
         ),
-        const SizedBox(width: 20),
+        SizedBox(width: widget.width),
         GestureDetector(
           onTap: () {
             widget.secondTabFunc();

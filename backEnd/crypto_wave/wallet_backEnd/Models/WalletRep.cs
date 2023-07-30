@@ -22,44 +22,64 @@ namespace user_wallet.Models
         #region [INTERFACE_IMPLEMENTION]
 
         /// <summary>
-        /// [BUY/SELL]
+        /// [BUY_CRYPTO]
         /// </summary>
         /// <param name="changeDto"></param>
         /// <returns></returns>
-        public bool ChangeWallet(WalletChangeDto changeDto)
+        public bool BuyCrypto(WalletChangeDto changeDto)
         {
-            var currencyToBuy = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToBuy && w.UserId == changeDto.UserId);
-            if (currencyToBuy == null)
-            {
-                currencyToBuy = new Wallet
-                {
-                    CurrencyName = changeDto.CurrencyToBuy,
-                    UserId = changeDto.UserId,
-                    CurrencyCount = 0
-                };
-                _context.Wallet?.Add(currencyToBuy);
-            }
-
-            var currencyToSell = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToSell && w.UserId == changeDto.UserId);
-            if (currencyToSell == null)
-            {
-                currencyToSell = new Wallet
-                {
-                    CurrencyName = changeDto.CurrencyToSell,
-                    UserId = changeDto.UserId,
-                    CurrencyCount = 0
-                };
-                _context.Wallet?.Add(currencyToSell);
-            }
-
-            int totalCost = changeDto.CurrencyCount;
-            if (currencyToSell.CurrencyCount < totalCost)
+            var cryptoToBuy = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToBuy && w.UserId == changeDto.UserId);
+            if (cryptoToBuy == null || cryptoToBuy.CurrencyCount < changeDto.CurrencyCount)
             {
                 return false;
             }
 
-            currencyToBuy.CurrencyCount += changeDto.CurrencyCount;
-            currencyToSell.CurrencyCount -= changeDto.CurrencyCount;
+            var cryptoToSell = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToSell && w.UserId == changeDto.UserId);
+
+            double equivalentAmount = changeDto.CurrencyCount * changeDto.CurrencyToBuyPriceInUsd / changeDto.CurrencyToSellPriceInUsd;
+            if (cryptoToSell == null)
+            {
+                return false;
+            }
+
+            cryptoToBuy.CurrencyCount -= changeDto.CurrencyCount;
+            cryptoToSell.CurrencyCount += equivalentAmount;
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        /// <summary>
+        /// [SELL_CRYPTO]
+        /// </summary>
+        /// <param name="changeDto"></param>
+        /// <returns></returns>
+        public bool SellCrypto(WalletChangeDto changeDto)
+        {
+            var cryptoToBuy = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToBuy && w.UserId == changeDto.UserId);
+            if (cryptoToBuy == null)
+            {
+                return false;
+            }
+
+            var cryptoToSell = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToSell && w.UserId == changeDto.UserId);
+
+            if (cryptoToSell == null)
+            {
+                return false;
+            }
+
+            double equivalentAmount = changeDto.CurrencyCount * changeDto.CurrencyToSellPriceInUsd / changeDto.CurrencyToBuyPriceInUsd;
+            double equivalentAmountCoin = cryptoToSell.CurrencyCount * changeDto.CurrencyToSellPriceInUsd / changeDto.CurrencyToBuyPriceInUsd;
+
+            if (equivalentAmountCoin < equivalentAmount)
+            {
+                return false;
+            }
+
+            cryptoToBuy.CurrencyCount += equivalentAmount;
+            cryptoToSell.CurrencyCount -= changeDto.CurrencyCount;
 
             _context.SaveChanges();
 
@@ -73,7 +93,7 @@ namespace user_wallet.Models
         /// <returns></returns>
         public bool ChangeFavoriteWallet(WalletChangeFavoriteDto changeFavoriteDto)
         {
-            Wallet? walletModel = _context.Wallet?.FirstOrDefault(m => m.UserId == changeFavoriteDto.UserId && m.Id == changeFavoriteDto.Id);
+            Wallet? walletModel = _context.Wallet?.FirstOrDefault(m => m.UserId == changeFavoriteDto.UserId && m.CurrencyName == changeFavoriteDto.CurrencyName);
             if (walletModel == null)
             {
                 string message = "[X] Failed to change wallet because it is empty";
@@ -85,10 +105,10 @@ namespace user_wallet.Models
         }
 
         /// <summary>
-            /// [CREATE_WALLET]
-            /// </summary>
-            /// <param name="wallet"></param>
-            /// <returns></returns>
+        /// [CREATE_WALLET]
+        /// </summary>
+        /// <param name="wallet"></param>
+        /// <returns></returns>
         public bool CreateWallet(Wallet wallet)
         {
           if (wallet == null)

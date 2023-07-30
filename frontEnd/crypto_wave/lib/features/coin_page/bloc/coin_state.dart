@@ -15,13 +15,18 @@ class CoinLoading extends CoinState {
 }
 
 class CoinLoaded extends CoinState {
-  final Coins coin;
-  final WalletRead wallet;
+  final Coins? coin;
+  final List<Coins>? listCoins;
+  final WalletRead? wallet;
 
-  const CoinLoaded({required this.coin, required this.wallet});
+  const CoinLoaded({
+    this.coin,
+    this.wallet,
+    this.listCoins,
+  });
 
   @override
-  List<Object?> get props => [coin, wallet];
+  List<Object?> get props => [coin, wallet, listCoins];
 }
 
 class CoinLoadingFailure extends CoinState {

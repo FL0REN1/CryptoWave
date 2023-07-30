@@ -50,4 +50,5 @@ class Validators {
       'Length: 10 to 49 characters. \nMust have a small letter, a capital letter, a number and a special character';
   static String repeatPasswordErrorText = 'The passwords must match';
   static String searchErrorText = 'Text can\'t be null';
+  static String coinErrorText = 'Amount can\'t be null';
 }

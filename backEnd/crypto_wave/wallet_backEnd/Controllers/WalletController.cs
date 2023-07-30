@@ -30,17 +30,38 @@ namespace user_wallet.Controllers
         #region [WEB_API]
 
         /// <summary>
-        /// [WALLET_CHANGE]
+        /// [WALLET_BUY]
         /// </summary>
         /// <param name="walletChangeDto"></param>
         /// <returns></returns>
-        [HttpPost("change",Name = "WalletChange")]
-        public ActionResult<WalletReadDto> WalletChange([FromBody] WalletChangeDto walletChangeDto)
+        [HttpPost("buyCrypto",Name = "WalletBuy")]
+        public ActionResult<WalletReadDto> WalletBuy([FromBody] WalletChangeDto walletChangeDto)
         {
             string logMessage = $"--> Wallet changed: {walletChangeDto.UserId}...";
             WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage);
 
-            bool success = _repository.ChangeWallet(walletChangeDto);
+            bool success = _repository.BuyCrypto(walletChangeDto);
+            if (!success) return NotFound();
+            _repository.SaveChanges();
+
+            string logMessage2 = $"--> Wallet changed successfully !";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage2);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// [WALLET_SELL]
+        /// </summary>
+        /// <param name="walletChangeDto"></param>
+        /// <returns></returns>
+        [HttpPost("sellCrypto", Name = "WalletSell")]
+        public ActionResult<WalletReadDto> WalletSell([FromBody] WalletChangeDto walletChangeDto)
+        {
+            string logMessage = $"--> Wallet changed: {walletChangeDto.UserId}...";
+            WalletRabbitMQ.WalletActionMQ.SendMessage(logMessage);
+
+            bool success = _repository.SellCrypto(walletChangeDto);
             if (!success) return NotFound();
             _repository.SaveChanges();
 

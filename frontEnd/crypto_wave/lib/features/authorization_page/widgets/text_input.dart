@@ -10,6 +10,8 @@ class TextInput extends StatefulWidget {
     required this.onTextSubmitted,
     required this.errorCondition,
     required this.errorText,
+    required this.isCoin,
+    required this.enabled,
   }) : super(key: key);
 
   final String labelText;
@@ -18,6 +20,8 @@ class TextInput extends StatefulWidget {
   final Function(String) onTextSubmitted;
   final bool Function(String)? errorCondition;
   final String? errorText;
+  final bool isCoin;
+  final bool enabled;
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -54,6 +58,10 @@ class _TextInputState extends State<TextInput> {
       focusNode: _focusNode,
       obscuringCharacter: '*',
       obscureText: widget.security,
+      enabled: widget.enabled,
+      keyboardType: widget.isCoin
+          ? TextInputType.number
+          : null, // Set the numeric keyboard
       onChanged: (newValue) {
         setState(() {
           _isTextFieldEmpty = newValue.isEmpty;

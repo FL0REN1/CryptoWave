@@ -29,6 +29,7 @@ class CoinImgTitleSubtitle extends StatelessWidget {
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               titleText,

@@ -29,8 +29,8 @@ namespace user_wallet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurrencyCount")
-                        .HasColumnType("int");
+                    b.Property<double>("CurrencyCount")
+                        .HasColumnType("float");
 
                     b.Property<string>("CurrencyName")
                         .IsRequired()

@@ -5,7 +5,11 @@ namespace user_wallet.Models.Dto
     public class WalletChangeDto
     {
         [Required]
-        public int CurrencyCount { get; set; }
+        public double CurrencyCount { get; set; }
+        [Required]
+        public double CurrencyToBuyPriceInUsd { get; set; }
+        [Required]
+        public double CurrencyToSellPriceInUsd { get; set; }
 
         [Required]
         public string? CurrencyToBuy { get; set; }

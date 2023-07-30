@@ -6,7 +6,8 @@ namespace user_wallet.Models
     {
         bool SaveChanges();
 
-        bool ChangeWallet(WalletChangeDto changeDto);
+        bool BuyCrypto(WalletChangeDto changeDto);
+        bool SellCrypto(WalletChangeDto changeDto);
         bool CreateWallet(Wallet wallet);
         bool ChangeFavoriteWallet(WalletChangeFavoriteDto wallet);
 

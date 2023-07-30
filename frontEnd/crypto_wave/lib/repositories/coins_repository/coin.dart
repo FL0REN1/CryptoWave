@@ -43,14 +43,17 @@ class Coin implements AbstractCoinsRepository {
     final details = CoinsDetails.fromJson(usdDataDetails);
 
     final tradeData = await getCoinsTrade(currencyCode);
-    final trade = CoinsTrade.fromJson(tradeData);
-
-    return Coins(name: currencyCode, details: details, trade: [trade]);
+    final tradeObject1 = tradeData['Data'] as Map<String, dynamic>;
+    final tradeObject2 = tradeObject1['Data'] as List<dynamic>;
+    final tradeList = tradeObject2
+        .map((tradeItem) => CoinsTrade.fromJson(tradeItem))
+        .toList();
+    return Coins(name: currencyCode, details: details, trade: tradeList);
   }
 
   Future<Map<String, dynamic>> getCoinsTrade(String coinSymbol) async {
     final Response responseTrade = await dio.get(
-        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=$coinSymbol&tsym=USD&limit=10&3531212fe9285f5a1acce2722b7d5aae80f248e353705b51ae0050978f756012');
+        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=$coinSymbol&tsym=USD&limit=1&3531212fe9285f5a1acce2722b7d5aae80f248e353705b51ae0050978f756012');
 
     return responseTrade.data as Map<String, dynamic>;
   }

@@ -16,7 +16,7 @@ namespace user_wallet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CurrencyCount = table.Column<int>(type: "int", nullable: false),
+                    CurrencyCount = table.Column<double>(type: "float", nullable: false),
                     CurrencyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     IsFavorite = table.Column<bool>(type: "bit", nullable: false)

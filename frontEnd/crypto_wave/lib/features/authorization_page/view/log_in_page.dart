@@ -49,28 +49,34 @@ class _LogInPageState extends State<LogInPage> {
         children: <Widget>[
           const SizedBox(height: 10),
           TextInput(
-              labelText: 'Email',
-              security: false,
-              giveMeText: emailController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  emailController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidEmail(value),
-              errorText: Validators.emailErrorText),
+            labelText: 'Email',
+            security: false,
+            giveMeText: emailController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                emailController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidEmail(value),
+            errorText: Validators.emailErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           TextInput(
-              labelText: 'Password',
-              security: true,
-              giveMeText: passwordController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  passwordController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidPassword(value),
-              errorText: Validators.passwordErrorText),
+            labelText: 'Password',
+            security: true,
+            giveMeText: passwordController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                passwordController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidPassword(value),
+            errorText: Validators.passwordErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           RoutedTextIconButton(
             routedButtonText: 'Log in',

@@ -84,6 +84,8 @@ class _AutorizationPageState extends State<AutorizationPage> {
                       secondTabFunc: () => setState(() {
                         selectedTab = false;
                       }),
+                      width: 20,
+                      isFirstTabSelect: false,
                     ),
                     selectedTab ? const LogInPage() : const SignUpPage(),
                   ],

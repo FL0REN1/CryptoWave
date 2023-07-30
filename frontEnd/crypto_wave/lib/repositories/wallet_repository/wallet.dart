@@ -21,21 +21,28 @@ class Wallet implements AbstractWalletRepository {
   @override
   Future<WalletRead> getDetailsWallet(WalletGetDetails walletGetDetails) async {
     final Response response = await dio
-        .get('http://10.0.2.2:5211/api/Wallet/details', data: getDetailsWallet);
-    final dynamic userResponse = response.data;
-    final WalletRead walletRead = WalletRead.fromJson(userResponse);
+        .get('http://10.0.2.2:5211/api/Wallet/details', data: walletGetDetails);
+    final dynamic walletResponse = response.data;
+    final WalletRead walletRead = WalletRead.fromJson(walletResponse);
     return walletRead;
   }
 
   @override
-  Future<WalletRead> changeWallet(WalletChange walletChange) async {
-    final Response response = await dio.post(
-      'http://10.0.2.2:5211/api/Wallet/change',
-      data: walletChange,
+  Future<bool> buyWallet(WalletBuy walletBuy) async {
+    await dio.post(
+      'http://10.0.2.2:5211/api/Wallet/buyCrypto',
+      data: walletBuy,
     );
-    final dynamic walletResponse = response.data;
-    final WalletRead wallet = WalletRead.fromJson(walletResponse);
-    return wallet;
+    return true;
+  }
+
+  @override
+  Future<bool> sellWallet(WalletSell walletSell) async {
+    await dio.post(
+      'http://10.0.2.2:5211/api/Wallet/sellCrypto',
+      data: walletSell,
+    );
+    return true;
   }
 
   @override

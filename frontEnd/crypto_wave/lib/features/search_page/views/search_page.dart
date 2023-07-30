@@ -59,6 +59,8 @@ class _SearchPageState extends State<SearchPage> {
                   },
                   errorCondition: (value) => Validators.isValidSearch(value),
                   errorText: Validators.searchErrorText,
+                  isCoin: false,
+                  enabled: true,
                 ),
               ),
             ),

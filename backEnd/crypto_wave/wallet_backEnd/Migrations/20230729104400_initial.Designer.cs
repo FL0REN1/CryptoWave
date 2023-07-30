@@ -11,7 +11,7 @@ using user_wallet.Models;
 namespace user_wallet.Migrations
 {
     [DbContext(typeof(WalletContext))]
-    [Migration("20230726163946_initial")]
+    [Migration("20230729104400_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -32,8 +32,8 @@ namespace user_wallet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurrencyCount")
-                        .HasColumnType("int");
+                    b.Property<double>("CurrencyCount")
+                        .HasColumnType("float");
 
                     b.Property<string>("CurrencyName")
                         .IsRequired()

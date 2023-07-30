@@ -8,7 +8,7 @@ namespace user_wallet.Models
         [Required]
         public int Id { get; set; }
         [Required]
-        public int CurrencyCount { get; set; }
+        public double CurrencyCount { get; set; }
         [Required]
         public string? CurrencyName { get; set; }
         [Required]

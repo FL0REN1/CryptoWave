@@ -49,15 +49,16 @@ class _CoinSmallContainerState extends State<CoinSmallContainer> {
           const SizedBox(width: 20),
           Expanded(
             child: Align(
-              alignment: Alignment.centerRight, // Align to the right
+              alignment: Alignment.centerRight,
               child: RoutedTextIconButton(
                 routedButtonText: 'View more',
                 onPressed: () {
                   AutoRouter.of(context).push(
                     CoinRoute(
-                        currencyCode: widget.currencyCode,
-                        userId: widget.userId,
-                        currencyName: widget.currencyName),
+                      currencyCode: widget.currencyCode,
+                      userId: widget.userId,
+                      currencyName: widget.currencyName,
+                    ),
                   );
                 },
                 width: 230,

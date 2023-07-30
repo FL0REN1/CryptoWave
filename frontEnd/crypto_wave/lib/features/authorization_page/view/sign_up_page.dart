@@ -73,65 +73,80 @@ class _SignUpPageState extends State<SignUpPage> {
         children: <Widget>[
           const SizedBox(height: 10),
           TextInput(
-              labelText: 'First Name',
-              security: false,
-              giveMeText: firstNameController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  firstNameController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidFullName(value),
-              errorText: Validators.fullNameErrorText),
+            labelText: 'First Name',
+            security: false,
+            giveMeText: firstNameController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                firstNameController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidFullName(value),
+            errorText: Validators.fullNameErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           TextInput(
-              labelText: 'Last Name',
-              security: false,
-              giveMeText: lastNameController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  lastNameController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidFullName(value),
-              errorText: Validators.fullNameErrorText),
+            labelText: 'Last Name',
+            security: false,
+            giveMeText: lastNameController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                lastNameController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidFullName(value),
+            errorText: Validators.fullNameErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           TextInput(
-              labelText: 'Email',
-              security: false,
-              giveMeText: emailController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  emailController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidEmail(value),
-              errorText: Validators.emailErrorText),
+            labelText: 'Email',
+            security: false,
+            giveMeText: emailController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                emailController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidEmail(value),
+            errorText: Validators.emailErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           TextInput(
-              labelText: 'Password',
-              security: true,
-              giveMeText: passwordController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  passwordController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidPassword(value),
-              errorText: Validators.passwordErrorText),
+            labelText: 'Password',
+            security: true,
+            giveMeText: passwordController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                passwordController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidPassword(value),
+            errorText: Validators.passwordErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           const SizedBox(height: 20),
           TextInput(
-              labelText: 'Repeat password',
-              security: true,
-              giveMeText: repeatPasswordController,
-              onTextSubmitted: (newText) {
-                setState(() {
-                  repeatPasswordController.text = newText;
-                });
-              },
-              errorCondition: (value) => Validators.isValidRepeatPassword(
-                  value, passwordController.text),
-              errorText: Validators.repeatPasswordErrorText),
+            labelText: 'Repeat password',
+            security: true,
+            giveMeText: repeatPasswordController,
+            onTextSubmitted: (newText) {
+              setState(() {
+                repeatPasswordController.text = newText;
+              });
+            },
+            errorCondition: (value) => Validators.isValidRepeatPassword(
+                value, passwordController.text),
+            errorText: Validators.repeatPasswordErrorText,
+            isCoin: false,
+            enabled: true,
+          ),
           CheckBox(
             labelText: 'I Agree to Terms and Conditions',
             giveMeState: stateChecker,
