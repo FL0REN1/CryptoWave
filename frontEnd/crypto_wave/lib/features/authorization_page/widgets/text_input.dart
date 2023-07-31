@@ -1,5 +1,6 @@
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextInput extends StatefulWidget {
   const TextInput({
@@ -59,9 +60,12 @@ class _TextInputState extends State<TextInput> {
       obscuringCharacter: '*',
       obscureText: widget.security,
       enabled: widget.enabled,
+      inputFormatters: widget.isCoin
+          ? [NoSpaceAndHyphenFormatter()]
+          : null,
       keyboardType: widget.isCoin
           ? TextInputType.number
-          : null, // Set the numeric keyboard
+          : null,
       onChanged: (newValue) {
         setState(() {
           _isTextFieldEmpty = newValue.isEmpty;
@@ -107,5 +111,14 @@ class _TextInputState extends State<TextInput> {
         ),
       ),
     );
+  }
+}
+
+class NoSpaceAndHyphenFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String filteredText = newValue.text.replaceAll(RegExp(r'[ -]'), '');
+    return newValue.copyWith(text: filteredText);
   }
 }

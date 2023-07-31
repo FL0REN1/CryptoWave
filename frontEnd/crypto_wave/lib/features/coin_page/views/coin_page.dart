@@ -7,11 +7,11 @@ import 'package:crypto_wave/features/coin_page/widgets/widgets.dart';
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:crypto_wave/repositories/coins_repository/coins_repository.dart';
 import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
-import 'package:crypto_wave/repositories/wallet_repository/models/models.dart';
 import 'package:crypto_wave/repositories/wallet_repository/wallet_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 @RoutePage()
 class CoinPage extends StatefulWidget {
@@ -56,20 +56,6 @@ class _CoinPageState extends State<CoinPage> {
       imageUrl: 'https://cdn-icons-png.flaticon.com/512/1536/1536384.png',
     ),
     trade: [],
-    wallet: WalletRead(
-      id: 0,
-      currencyCount: 0,
-      currencyName: '',
-      userId: 0,
-      isFavorite: false,
-    ),
-  );
-  WalletRead? walletSecond = const WalletRead(
-    currencyCount: 0,
-    currencyName: '',
-    id: 0,
-    isFavorite: false,
-    userId: 0,
   );
 
   @override
@@ -85,13 +71,8 @@ class _CoinPageState extends State<CoinPage> {
       currencyToBuy: '',
       currencyToBuyPriceInUsd: 0,
       currencyToSellPriceInUsd: 0,
+      currencyNameSecondWallet: 'NULL_COIN',
     ));
-
-    // _coinBloc.startUpdatingCoins(
-    //   widget.currencyCode,
-    //   widget.userId,
-    //   widget.currencyName,
-    // );
 
     super.initState();
   }
@@ -113,6 +94,7 @@ class _CoinPageState extends State<CoinPage> {
             currencyToBuy: '',
             currencyToBuyPriceInUsd: 0,
             currencyToSellPriceInUsd: 0,
+            currencyNameSecondWallet: 'NULL_COIN',
           ),
         );
         return completer.future;
@@ -155,6 +137,7 @@ class _CoinPageState extends State<CoinPage> {
                       currencyToBuy: '',
                       currencyToBuyPriceInUsd: 0,
                       currencyToSellPriceInUsd: 0,
+                      currencyNameSecondWallet: 'NULL_COIN',
                     ),
                   );
                 },
@@ -180,6 +163,7 @@ class _CoinPageState extends State<CoinPage> {
           bloc: _coinBloc,
           builder: (context, state) {
             if (state is CoinLoaded) {
+              GetIt.I<Talker>().good(state.walletSecond);
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -276,6 +260,7 @@ class _CoinPageState extends State<CoinPage> {
                                   state.coin!.details.priceInUSD,
                               currencyToSellPriceInUsd:
                                   coinSecond!.details.priceInUSD,
+                              currencyNameSecondWallet: coinSecond!.name,
                             ));
                           },
                           sellFuncBtn: () {
@@ -294,10 +279,29 @@ class _CoinPageState extends State<CoinPage> {
                                   coinSecond!.details.priceInUSD,
                               currencyToSellPriceInUsd:
                                   state.coin!.details.priceInUSD,
+                              currencyNameSecondWallet: coinSecond!.name,
                             ));
                           },
                           wallet: state.wallet,
-                          walletSecond: walletSecond,
+                          walletSecond: state.walletSecond,
+                          onChangedWallet: (coins) {
+                            _coinBloc.add(LoadDataEvent(
+                              completer: null,
+                              currencyCode: widget.currencyCode,
+                              userId: widget.userId,
+                              currencyName: widget.currencyName,
+                              dataType: LoadDataType.secondWalletDetails,
+                              currencyCount: 0,
+                              currencyToSell: '',
+                              currencyToBuy: '',
+                              currencyToBuyPriceInUsd: 0,
+                              currencyToSellPriceInUsd: 0,
+                              currencyNameSecondWallet: coins!.name,
+                            ));
+                            setState(() {
+                              coinSecond = coins;
+                            });
+                          },
                         ),
                       ),
                     ],
@@ -319,6 +323,7 @@ class _CoinPageState extends State<CoinPage> {
                   currencyToBuy: '',
                   currencyToBuyPriceInUsd: 0,
                   currencyToSellPriceInUsd: 0,
+                  currencyNameSecondWallet: 'NULL_COIN',
                 )),
               );
             }

@@ -2,7 +2,6 @@ import 'package:crypto_wave/features/authorization_page/widgets/text_input.dart'
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:crypto_wave/features/home_page/widgets/coin_img_title_subtitle.dart';
 import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
-import 'package:crypto_wave/repositories/wallet_repository/models/models.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,9 @@ class DropdownCoinButton extends StatefulWidget {
     required this.selectedCoin,
     required this.onChanged,
     required this.coinRemove,
-    required this.selectedWallet,
+    required this.onChangedWallet,
+    required this.currentCoinController,
+    required this.otherCoinController,
   });
   final List<Coins>? coinsList;
 
@@ -21,8 +22,9 @@ class DropdownCoinButton extends StatefulWidget {
   final Coins? coinRemove;
 
   final Function(Coins?) onChanged;
-
-  final WalletRead? selectedWallet;
+  final Function(Coins?) onChangedWallet;
+  final TextEditingController currentCoinController;
+  final TextEditingController otherCoinController;
 
   @override
   State<DropdownCoinButton> createState() => _DropdownCoinButtonState();
@@ -31,20 +33,24 @@ class DropdownCoinButton extends StatefulWidget {
 class _DropdownCoinButtonState extends State<DropdownCoinButton> {
   final TextEditingController textEditingController = TextEditingController();
   Coins? selectedCoin;
-  WalletRead? selectedWallet;
-
 
   @override
   void initState() {
     super.initState();
     selectedCoin = widget.selectedCoin;
-    selectedWallet = widget.selectedWallet;
   }
 
   @override
   void dispose() {
     textEditingController.dispose();
     super.dispose();
+  }
+
+  double convertPrice(double amountOfFirstCoin, double priceOfFirstCoin,
+      double priceOfSecondCoin) {
+    double equivalentAmount =
+        amountOfFirstCoin * priceOfFirstCoin / priceOfSecondCoin;
+    return equivalentAmount;
   }
 
   @override
@@ -70,7 +76,7 @@ class _DropdownCoinButtonState extends State<DropdownCoinButton> {
               hint: Text('Select Coin',
                   style: theme.textTheme.labelMedium?.copyWith(fontSize: 18)),
               items: widget.coinsList!
-                  .where((coin) => coin != widget.coinRemove)
+                  .where((coin) => coin.name != widget.coinRemove!.name)
                   .map(
                     (coin) => DropdownMenuItem(
                       value: coin,
@@ -86,12 +92,25 @@ class _DropdownCoinButtonState extends State<DropdownCoinButton> {
               value: widget.coinsList!.contains(selectedCoin)
                   ? selectedCoin
                   : null,
-              onChanged: (value) {
+              onChanged: (value) async {
+                double amountOfFirstCoin =
+                    double.tryParse(widget.currentCoinController.text) ?? 0.0;
+                double priceOfFirstCoin = widget.coinRemove!.details.priceInUSD;
+                double priceOfSecondCoin = value!.details.priceInUSD;
+
+                double convertedPrice = convertPrice(
+                  amountOfFirstCoin,
+                  priceOfFirstCoin,
+                  priceOfSecondCoin,
+                );
+
                 setState(() {
                   selectedCoin = value;
-                  selectedWallet = value!.wallet;
+                  widget.otherCoinController.text =
+                      convertedPrice.toStringAsFixed(2);
                 });
-                widget.onChanged(value);
+                await widget.onChanged(value);
+                await widget.onChangedWallet(value);
               },
               dropdownStyleData: const DropdownStyleData(
                 maxHeight: 300,

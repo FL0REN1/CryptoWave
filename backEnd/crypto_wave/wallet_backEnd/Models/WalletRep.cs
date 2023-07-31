@@ -29,21 +29,17 @@ namespace user_wallet.Models
         public bool BuyCrypto(WalletChangeDto changeDto)
         {
             var cryptoToBuy = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToBuy && w.UserId == changeDto.UserId);
-            if (cryptoToBuy == null || cryptoToBuy.CurrencyCount < changeDto.CurrencyCount)
-            {
-                return false;
-            }
+            if (cryptoToBuy == null) return false;
 
             var cryptoToSell = _context.Wallet?.FirstOrDefault(w => w.CurrencyName == changeDto.CurrencyToSell && w.UserId == changeDto.UserId);
+            if (cryptoToSell == null) return false;
 
-            double equivalentAmount = changeDto.CurrencyCount * changeDto.CurrencyToBuyPriceInUsd / changeDto.CurrencyToSellPriceInUsd;
-            if (cryptoToSell == null)
-            {
-                return false;
-            }
+            double equivalentAmount = changeDto.CurrencyCount *  changeDto.CurrencyToBuyPriceInUsd / changeDto.CurrencyToSellPriceInUsd;
+            double equivalentAmountCoin = cryptoToSell.CurrencyCount * changeDto.CurrencyToSellPriceInUsd / changeDto.CurrencyToBuyPriceInUsd;
+            if (equivalentAmountCoin < changeDto.CurrencyCount)return false;
 
-            cryptoToBuy.CurrencyCount -= changeDto.CurrencyCount;
-            cryptoToSell.CurrencyCount += equivalentAmount;
+            cryptoToBuy.CurrencyCount += changeDto.CurrencyCount;
+            cryptoToSell.CurrencyCount -= equivalentAmount;
 
             _context.SaveChanges();
 

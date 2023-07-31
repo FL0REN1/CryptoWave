@@ -24,6 +24,7 @@ class CoinBuySell extends StatefulWidget {
     required this.sellFuncBtn,
     required this.wallet,
     required this.walletSecond,
+    required this.onChangedWallet,
   }) : super(key: key);
   final Coins? coin;
   final Coins? coinSecond;
@@ -40,6 +41,7 @@ class CoinBuySell extends StatefulWidget {
   final void Function() buyFuncBtn;
   final void Function() sellFuncBtn;
   final Function(Coins?) onChanged;
+  final Function(Coins?) onChangedWallet;
 
   final bool isBuy;
 
@@ -83,13 +85,19 @@ class _CoinBuySellState extends State<CoinBuySell> {
             child: DropdownCoinButton(
               coinsList: widget.coinsList,
               selectedCoin: widget.coinSecond,
-              selectedWallet: widget.walletSecond,
+              onChangedWallet: (coins) {
+                setState(() {
+                  widget.onChangedWallet(coins);
+                });
+              },
               onChanged: (coins) {
                 setState(() {
                   widget.onChanged(coins);
                 });
               },
               coinRemove: widget.coin,
+              currentCoinController: widget.currentCoinController,
+              otherCoinController: widget.otherCoinController,
             ),
           ),
         );
@@ -144,7 +152,11 @@ class _CoinBuySellState extends State<CoinBuySell> {
             ),
           ],
         ),
-        Text(widget.wallet!.currencyCount.toString()),
+        Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+              '${widget.wallet!.currencyCount.toStringAsFixed(2)} [count]'),
+        ),
         const Divider(
           height: 50,
           thickness: 2,
@@ -180,7 +192,11 @@ class _CoinBuySellState extends State<CoinBuySell> {
             ),
           ],
         ),
-        Text(widget.walletSecond!.currencyCount.toString()),
+        Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+              '${widget.walletSecond!.currencyCount.toStringAsFixed(2)} [count]'),
+        ),
         const SizedBox(height: 30),
         RoutedTextIconButton(
           routedButtonText: widget.isBuy ? 'Buy' : 'Sell',

@@ -12,6 +12,7 @@ class LoadDataEvent extends CoinEvent {
   final String currencyCode;
   final int userId;
   final String currencyName;
+  final String currencyNameSecondWallet;
 
   final double currencyCount;
   final double currencyToBuyPriceInUsd;
@@ -32,6 +33,7 @@ class LoadDataEvent extends CoinEvent {
     required this.currencyToSell,
     required this.currencyToBuyPriceInUsd,
     required this.currencyToSellPriceInUsd,
+    required this.currencyNameSecondWallet,
   });
 
   @override
@@ -45,13 +47,15 @@ class LoadDataEvent extends CoinEvent {
         currencyToSell,
         currencyToBuyPriceInUsd,
         currencyToSellPriceInUsd,
+        currencyNameSecondWallet
       ];
 }
 
 enum LoadDataType {
   coinDetails,
+  secondWalletDetails,
   change,
   allCoins,
   buyCoin,
-  sellCoin
+  sellCoin,
 }

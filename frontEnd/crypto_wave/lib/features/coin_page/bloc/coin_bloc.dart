@@ -33,6 +33,9 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
         case LoadDataType.coinDetails:
           await _loadCoinDetails(event, emit);
           break;
+        case LoadDataType.secondWalletDetails:
+          await _loadSecondWalletDetails(event, emit);
+          break;
         case LoadDataType.change:
           await _loadChange(event, emit);
           break;
@@ -69,6 +72,34 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
     emit(CoinLoaded(coin: coin, wallet: wallet));
   }
 
+  Future<void> _loadSecondWalletDetails(
+    LoadDataEvent event,
+    Emitter<CoinState> emit,
+  ) async {
+    WalletGetDetails walletGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyName,
+    );
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
+
+    final coins = await coinsRepository.getCoinsList();
+    final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
+    final coin = await coinsRepository.getCoinDetails(event.currencyCode);
+
+    emit(CoinLoaded(
+      coin: coin,
+      wallet: wallet,
+      listCoins: coins,
+      walletSecond: walletSecond,
+    ));
+  }
+
   Future<void> _loadChange(
     LoadDataEvent event,
     Emitter<CoinState> emit,
@@ -98,12 +129,23 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       userId: event.userId,
       currencyName: event.currencyName,
     );
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
 
     final coins = await coinsRepository.getCoinsList();
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
     final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
     final coin = await coinsRepository.getCoinDetails(event.currencyCode);
 
-    emit(CoinLoaded(coin: coin, wallet: wallet, listCoins: coins));
+    emit(CoinLoaded(
+        coin: coin,
+        wallet: wallet,
+        walletSecond: walletSecond,
+        listCoins: coins));
   }
 
   Future<void> _buyCoin(
@@ -122,12 +164,26 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       userId: event.userId,
       currencyName: event.currencyName,
     );
-
-    final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
-    final coin = await coinsRepository.getCoinDetails(event.currencyCode);
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
     await walletRepository.buyWallet(walletBuy);
 
-    emit(CoinLoaded(coin: coin, wallet: wallet));
+    final coins = await coinsRepository.getCoinsList();
+    final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
+    final coin = await coinsRepository.getCoinDetails(event.currencyCode);
+
+    emit(
+      CoinLoaded(
+          coin: coin,
+          wallet: wallet,
+          listCoins: coins,
+          walletSecond: walletSecond),
+    );
   }
 
   Future<void> _sellCoin(
@@ -146,12 +202,25 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       userId: event.userId,
       currencyName: event.currencyName,
     );
-
-    final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
-    final coin = await coinsRepository.getCoinDetails(event.currencyCode);
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
     await walletRepository.sellWallet(walletSell);
 
-    emit(CoinLoaded(coin: coin, wallet: wallet));
+    final coins = await coinsRepository.getCoinsList();
+    final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
+    final coin = await coinsRepository.getCoinDetails(event.currencyCode);
+
+    emit(CoinLoaded(
+      coin: coin,
+      wallet: wallet,
+      listCoins: coins,
+      walletSecond: walletSecond,
+    ));
   }
 
   void startUpdatingCoins(
@@ -163,6 +232,8 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
     String currencyToSell,
     double currencyToBuyPriceInUsd,
     double currencyToSellPriceInUsd,
+    String currencyNameSecondWallet,
+    int userIdSecondWallet,
   ) {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 10), (_) {
@@ -177,6 +248,7 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
         currencyToSell: currencyToSell,
         currencyToBuyPriceInUsd: currencyToBuyPriceInUsd,
         currencyToSellPriceInUsd: currencyToSellPriceInUsd,
+        currencyNameSecondWallet: currencyNameSecondWallet,
       ));
     });
   }
