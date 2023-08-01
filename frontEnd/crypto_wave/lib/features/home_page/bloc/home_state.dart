@@ -16,8 +16,9 @@ class HomeLoading extends HomeState {
 
 class HomeLoaded extends HomeState {
   final List<Coins> coins;
+  final List<WalletRead> wallets;
 
-  const HomeLoaded({required this.coins});
+  const HomeLoaded({required this.coins, required this.wallets});
 
   @override
   List<Object?> get props => [coins];

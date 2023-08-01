@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:crypto_wave/features/coin_page/bloc/bloc.dart';
 import 'package:crypto_wave/features/coin_page/widgets/widgets.dart';
 import 'package:crypto_wave/features/helper_page/helper_page.dart';
+import 'package:crypto_wave/features/home_page/view/view.dart';
 import 'package:crypto_wave/repositories/coins_repository/coins_repository.dart';
 import 'package:crypto_wave/repositories/coins_repository/models/models.dart';
 import 'package:crypto_wave/repositories/wallet_repository/wallet_repository.dart';
@@ -66,11 +67,6 @@ class _CoinPageState extends State<CoinPage> {
       userId: widget.userId,
       currencyName: widget.currencyName,
       dataType: LoadDataType.allCoins,
-      currencyCount: 0,
-      currencyToSell: '',
-      currencyToBuy: '',
-      currencyToBuyPriceInUsd: 0,
-      currencyToSellPriceInUsd: 0,
       currencyNameSecondWallet: 'NULL_COIN',
     ));
 
@@ -89,11 +85,6 @@ class _CoinPageState extends State<CoinPage> {
             userId: widget.userId,
             currencyName: widget.currencyName,
             dataType: LoadDataType.coinDetails,
-            currencyCount: 0,
-            currencyToSell: '',
-            currencyToBuy: '',
-            currencyToBuyPriceInUsd: 0,
-            currencyToSellPriceInUsd: 0,
             currencyNameSecondWallet: 'NULL_COIN',
           ),
         );
@@ -101,64 +92,68 @@ class _CoinPageState extends State<CoinPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-            toolbarHeight: 90,
-            leading: IconButton(
+          toolbarHeight: 90,
+          leading: IconButton(
+            splashRadius: 20,
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              if (AutoRouter.of(context).currentPath != '/') {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ));
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+          title: BlocBuilder<CoinBloc, CoinState>(
+            bloc: _coinBloc,
+            builder: (context, state) {
+              if (state is CoinLoaded) {
+                title =
+                    "${state.wallet!.currencyName}/${state.coin!.details.toSymbol}";
+              }
+              return Text(title);
+            },
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
               splashRadius: 20,
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: BlocBuilder<CoinBloc, CoinState>(
-              bloc: _coinBloc,
-              builder: (context, state) {
-                if (state is CoinLoaded) {
-                  title =
-                      "${state.wallet!.currencyName}/${state.coin!.details.toSymbol}";
-                }
-                return Text(title);
+              onPressed: () {
+                setState(() {
+                  isFavorite = !isFavorite!;
+                });
+                _coinBloc.add(
+                  LoadDataEvent(
+                    completer: null,
+                    currencyCode: widget.currencyCode,
+                    userId: widget.userId,
+                    currencyName: widget.currencyName,
+                    dataType: LoadDataType.change,
+                    currencyNameSecondWallet: 'NULL_COIN',
+                  ),
+                );
               },
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                splashRadius: 20,
-                onPressed: () {
-                  setState(() {
-                    isFavorite = !isFavorite!;
-                  });
-                  _coinBloc.add(
-                    LoadDataEvent(
-                      completer: null,
-                      currencyCode: widget.currencyCode,
-                      userId: widget.userId,
-                      currencyName: widget.currencyName,
-                      dataType: LoadDataType.change,
-                      currencyCount: 0,
-                      currencyToSell: '',
-                      currencyToBuy: '',
-                      currencyToBuyPriceInUsd: 0,
-                      currencyToSellPriceInUsd: 0,
-                      currencyNameSecondWallet: 'NULL_COIN',
-                    ),
-                  );
+              icon: BlocBuilder<CoinBloc, CoinState>(
+                bloc: _coinBloc,
+                builder: (context, state) {
+                  if (isFavorite == null && state is CoinLoaded) {
+                    isFavorite = state.wallet!.isFavorite;
+                    dataLoaded = true;
+                  }
+                  return dataLoaded
+                      ? Icon(
+                          isFavorite ?? false
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                        )
+                      : Container();
                 },
-                icon: BlocBuilder<CoinBloc, CoinState>(
-                  bloc: _coinBloc,
-                  builder: (context, state) {
-                    if (isFavorite == null && state is CoinLoaded) {
-                      isFavorite = state.wallet!.isFavorite;
-                      dataLoaded = true;
-                    }
-                    return dataLoaded
-                        ? Icon(
-                            isFavorite ?? false
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                          )
-                        : Container();
-                  },
-                ),
-              )
-            ]),
+              ),
+            )
+          ],
+        ),
         body: BlocBuilder<CoinBloc, CoinState>(
           bloc: _coinBloc,
           builder: (context, state) {
@@ -174,8 +169,9 @@ class _CoinPageState extends State<CoinPage> {
                           borderRadius: BorderRadius.circular(16.0),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.white
-                                  .withOpacity(0.2), // Белое свечение
+                              color: Colors.white.withOpacity(
+                                0.2,
+                              ), // Белое свечение
                               spreadRadius: 10,
                               blurRadius: 20,
                               offset: const Offset(0, 0),
@@ -291,11 +287,6 @@ class _CoinPageState extends State<CoinPage> {
                               userId: widget.userId,
                               currencyName: widget.currencyName,
                               dataType: LoadDataType.secondWalletDetails,
-                              currencyCount: 0,
-                              currencyToSell: '',
-                              currencyToBuy: '',
-                              currencyToBuyPriceInUsd: 0,
-                              currencyToSellPriceInUsd: 0,
                               currencyNameSecondWallet: coins!.name,
                             ));
                             setState(() {
@@ -318,11 +309,6 @@ class _CoinPageState extends State<CoinPage> {
                   userId: widget.userId,
                   currencyName: widget.currencyName,
                   dataType: LoadDataType.coinDetails,
-                  currencyCount: 0,
-                  currencyToSell: '',
-                  currencyToBuy: '',
-                  currencyToBuyPriceInUsd: 0,
-                  currencyToSellPriceInUsd: 0,
                   currencyNameSecondWallet: 'NULL_COIN',
                 )),
               );

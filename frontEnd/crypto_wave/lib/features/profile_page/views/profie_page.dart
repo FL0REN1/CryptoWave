@@ -123,7 +123,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               child: eyeVisibility
                                   ? DoughuntChart(
-                                      wallet: state.wallet,
+                                      wallet: state.wallet
+                                          .where((e) =>
+                                              e.currencyName != 'NULL_COIN')
+                                          .toList(),
                                     )
                                   : const Icon(Icons.hide_image),
                             ),

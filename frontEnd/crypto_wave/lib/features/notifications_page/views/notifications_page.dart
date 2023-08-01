@@ -26,7 +26,17 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   void initState() {
     _notificationsBloc.add(const LoadNotifications(completer: null));
-
+    _notificationsBloc.stream.listen((state) {
+      if (state is NotificationsLoaded) {
+        setState(() {
+          isContentLoaded = true;
+        });
+      } else if (state is NotificationsLoadingFailure) {
+        setState(() {
+          isContentLoaded = false;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -36,7 +46,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
       onRefresh: () async {
         final completer = Completer();
         _notificationsBloc.add(LoadNotifications(completer: completer));
-        isContentLoaded = false;
+        setState(() {
+          isContentLoaded = false;
+        });
         return completer.future;
       },
       child: Scaffold(
@@ -46,7 +58,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          actions: isContentLoaded // Use the boolean variable here
+          actions: isContentLoaded
               ? [
                   IconButton(
                     splashRadius: 20,
@@ -80,7 +92,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
             bloc: _notificationsBloc,
             builder: (context, state) {
               if (state is NotificationsLoaded) {
-                isContentLoaded = true;
                 return ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,

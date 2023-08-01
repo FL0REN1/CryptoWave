@@ -9,9 +9,13 @@ abstract class HomeEvent extends Equatable {
 
 class LoadHome extends HomeEvent {
   final Completer? completer;
+  final int userId;
 
-  const LoadHome({required this.completer});
+  const LoadHome({
+    required this.completer,
+    required this.userId,
+  });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [userId];
 }

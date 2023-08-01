@@ -14,11 +14,11 @@ class LoadDataEvent extends CoinEvent {
   final String currencyName;
   final String currencyNameSecondWallet;
 
-  final double currencyCount;
-  final double currencyToBuyPriceInUsd;
-  final double currencyToSellPriceInUsd;
-  final String currencyToBuy;
-  final String currencyToSell;
+  final double? currencyCount;
+  final double? currencyToBuyPriceInUsd;
+  final double? currencyToSellPriceInUsd;
+  final String? currencyToBuy;
+  final String? currencyToSell;
 
   final LoadDataType dataType;
 
@@ -28,16 +28,16 @@ class LoadDataEvent extends CoinEvent {
     required this.userId,
     required this.currencyName,
     required this.dataType,
-    required this.currencyCount,
-    required this.currencyToBuy,
-    required this.currencyToSell,
-    required this.currencyToBuyPriceInUsd,
-    required this.currencyToSellPriceInUsd,
+    this.currencyCount,
+    this.currencyToBuy,
+    this.currencyToSell,
+    this.currencyToBuyPriceInUsd,
+    this.currencyToSellPriceInUsd,
     required this.currencyNameSecondWallet,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         currencyCode,
         userId,
         currencyName,

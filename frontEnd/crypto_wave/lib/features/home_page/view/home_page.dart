@@ -5,10 +5,12 @@ import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:crypto_wave/features/home_page/bloc/bloc.dart';
 import 'package:crypto_wave/features/home_page/widgets/widgets.dart';
 import 'package:crypto_wave/repositories/coins_repository/coins_repository.dart';
+import 'package:crypto_wave/repositories/wallet_repository/wallet_repository.dart';
 import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -18,14 +20,18 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class _HomePageState extends State<HomePage> {
-  final _homeBloc = HomeBloc(GetIt.I<AbstractCoinsRepository>());
+  final _homeBloc = HomeBloc(
+    GetIt.I<AbstractCoinsRepository>(),
+    GetIt.I<AbstractWalletRepository>(),
+  );
+  List<Coin> favoriteCoins = [];
 
   @override
   void initState() {
-    _homeBloc.add(const LoadHome(completer: null));
-
-    //_homeBloc.startUpdatingCoins();
+    _homeBloc.add(const LoadHome(completer: null, userId: 5));
 
     super.initState();
   }
@@ -43,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         child: RefreshIndicator(
           onRefresh: () async {
             final completer = Completer();
-            _homeBloc.add(LoadHome(completer: completer));
+            _homeBloc.add(LoadHome(completer: completer, userId: 5));
             return completer.future;
           },
           child: BlocBuilder<HomeBloc, HomeState>(
@@ -51,6 +57,14 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state is HomeLoaded) {
                 final theme = Theme.of(context);
+                GetIt.I<Talker>().error('123');
+
+                final favoriteCoins = state.coins.where((coin) {
+                  return state.wallets.any(
+                    (wallet) =>
+                        wallet.currencyName == coin.name && wallet.isFavorite,
+                  );
+                }).toList();
                 return Column(
                   children: <Widget>[
                     SingleChildScrollView(
@@ -105,32 +119,40 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              child: Text(
-                                'Favorites',
-                                style: theme.textTheme.labelMedium,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
+                            favoriteCoins.isNotEmpty
+                                ? Container(
+                                    margin: const EdgeInsets.only(right: 20),
+                                    child: Text(
+                                      'Favorites',
+                                      style: theme.textTheme.labelMedium,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            favoriteCoins.isNotEmpty
+                                ? const SizedBox(height: 20)
+                                : const SizedBox(),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(state.coins.length,
-                                    (int index) {
-                                  final coin = state.coins[index];
-                                  bool isLastElement =
-                                      index == state.coins.length - 1;
-                                  return Container(
-                                    margin: isLastElement
-                                        ? EdgeInsets.zero
-                                        : const EdgeInsets.only(right: 20),
-                                    child: CoinHugeContainer(
-                                      coin: coin,
-                                    ),
-                                  );
-                                }),
-                              ),
+                              child: favoriteCoins.isNotEmpty
+                                  ? Row(
+                                      children: List.generate(
+                                          favoriteCoins.length, (int index) {
+                                        final coin = favoriteCoins[index];
+                                        bool isLastElement =
+                                            index == favoriteCoins.length - 1;
+
+                                        return Container(
+                                          margin: isLastElement
+                                              ? EdgeInsets.zero
+                                              : const EdgeInsets.only(
+                                                  right: 20),
+                                          child: CoinHugeContainer(
+                                            coin: coin,
+                                          ),
+                                        );
+                                      }),
+                                    )
+                                  : null,
                             ),
                             const SizedBox(height: 20),
                             Container(
@@ -142,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 10),
                             SizedBox(
-                              height: 105,
+                              height: favoriteCoins.isNotEmpty ? 105 : null,
                               child: ListView.separated(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
@@ -165,11 +187,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    favoriteCoins.isNotEmpty
+                        ? const SizedBox()
+                        : const Spacer(
+                            flex: 1,
+                          ),
                     const SizedBox(height: 10),
-                    const Expanded(
-                      child: NavigationBottom(
-                        selectedIndex: 0,
-                      ),
+                    const NavigationBottom(
+                      selectedIndex: 0,
                     ),
                   ],
                 );
@@ -178,7 +203,7 @@ class _HomePageState extends State<HomePage> {
               if (state is HomeLoadingFailure) {
                 return LoadingFailure(
                   restart: () => _homeBloc.add(
-                    const LoadHome(completer: null),
+                    const LoadHome(completer: null, userId: 5),
                   ),
                 );
               }

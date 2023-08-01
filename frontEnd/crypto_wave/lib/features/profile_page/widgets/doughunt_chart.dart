@@ -19,7 +19,11 @@ class _DoughuntChartState extends State<DoughuntChart> {
 
   @override
   void initState() {
-    chartData = widget.wallet.map((e) => ChartData(x: e.currencyName, y: e.currencyCount)).toList();
+    chartData = widget.wallet
+        .map((e) => ChartData(
+            x: e.currencyName,
+            y: double.parse(e.currencyCount.toStringAsFixed(2))))
+        .toList();
 
     updateChartData();
 
@@ -31,9 +35,8 @@ class _DoughuntChartState extends State<DoughuntChart> {
       setState(() {
         chartData = widget.wallet
             .map((e) => ChartData(
-                  x: e.currencyName,
-                  y: e.currencyCount,
-                ))
+                x: e.currencyName,
+                y: double.parse(e.currencyCount.toStringAsFixed(2))))
             .toList();
       });
     });

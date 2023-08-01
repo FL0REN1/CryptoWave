@@ -65,11 +65,24 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       userId: event.userId,
       currencyName: event.currencyName,
     );
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
 
+    final coins = await coinsRepository.getCoinsList();
     final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
     final coin = await coinsRepository.getCoinDetails(event.currencyCode);
-
-    emit(CoinLoaded(coin: coin, wallet: wallet));
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
+    emit(
+      CoinLoaded(
+          coin: coin,
+          wallet: wallet,
+          walletSecond: walletSecond,
+          listCoins: coins),
+    );
   }
 
   Future<void> _loadSecondWalletDetails(
@@ -112,13 +125,25 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       userId: event.userId,
       currencyName: event.currencyName,
     );
+    WalletGetDetails walletSecondGetDetails = WalletGetDetails(
+      userId: event.userId,
+      currencyName: event.currencyNameSecondWallet,
+    );
 
+    final coins = await coinsRepository.getCoinsList();
     await walletRepository.changeFavoriteWallet(walletChangeFavorite);
-
+    final walletSecond = await walletRepository.getDetailsWallet(
+      walletSecondGetDetails,
+    );
     final wallet = await walletRepository.getDetailsWallet(walletGetDetails);
     final coin = await coinsRepository.getCoinDetails(event.currencyCode);
 
-    emit(CoinLoaded(coin: coin, wallet: wallet));
+    emit(CoinLoaded(
+      coin: coin,
+      wallet: wallet,
+      walletSecond: walletSecond,
+      listCoins: coins,
+    ));
   }
 
   Future<void> _loadAllCoins(
@@ -227,11 +252,11 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
     String currencyCode,
     int userId,
     String currencyName,
-    double currencyCount,
-    String currencyToBuy,
-    String currencyToSell,
-    double currencyToBuyPriceInUsd,
-    double currencyToSellPriceInUsd,
+    double? currencyCount,
+    String? currencyToBuy,
+    String? currencyToSell,
+    double? currencyToBuyPriceInUsd,
+    double? currencyToSellPriceInUsd,
     String currencyNameSecondWallet,
     int userIdSecondWallet,
   ) {
