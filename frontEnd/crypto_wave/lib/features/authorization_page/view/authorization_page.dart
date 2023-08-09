@@ -5,6 +5,8 @@ import 'package:crypto_wave/features/helper_page/helper_page.dart';
 import 'package:crypto_wave/features/welcome_page/widgets/widgets.dart';
 import 'package:crypto_wave/repositories/user_repository/models/models.dart';
 import 'package:crypto_wave/repositories/user_repository/user_repository.dart';
+import 'package:crypto_wave/repositories/wallet_repository/models/models.dart';
+import 'package:crypto_wave/repositories/wallet_repository/wallet_repository.dart';
 import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

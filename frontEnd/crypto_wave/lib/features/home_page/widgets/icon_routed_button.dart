@@ -1,17 +1,21 @@
+import 'package:crypto_wave/features/helper_page/rive_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class RoutedIconButton extends StatefulWidget {
   const RoutedIconButton({
     Key? key,
-    required this.svgIconPath,
-    required this.flutterIcon,
     required this.padding,
     required this.func,
+    required this.rivePath,
+    required this.artboard,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
-  final String? svgIconPath;
-  final IconData? flutterIcon;
+  final String rivePath;
+  final String artboard;
+  final double width;
+  final double height;
   final double padding;
   final void Function() func;
 
@@ -56,15 +60,12 @@ class _RoutedIconButtonState extends State<RoutedIconButton> {
                 : [Colors.blueGrey, Colors.blue],
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.all(widget.padding),
-          child: widget.svgIconPath != null
-              ? SvgPicture.asset(
-                  widget.svgIconPath!,
-                  width: 100,
-                  height: 100,
-                )
-              : Icon(widget.flutterIcon),
+        child: RiveRoute(
+          artboard: widget.artboard,
+          isSelected: true,
+          rivePath: widget.rivePath,
+          width: widget.width,
+          height: widget.height,
         ),
       ),
     );

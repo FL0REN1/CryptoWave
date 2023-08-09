@@ -4,9 +4,11 @@ import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 
 class NavigationBottom extends StatefulWidget {
-  const NavigationBottom({super.key, required this.selectedIndex});
+  const NavigationBottom(
+      {super.key, required this.selectedIndex, required this.userId});
 
   final int selectedIndex;
+  final int userId;
 
   @override
   State<NavigationBottom> createState() => _NavigationBottomState();
@@ -16,6 +18,7 @@ class _NavigationBottomState extends State<NavigationBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 90,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -33,64 +36,73 @@ class _NavigationBottomState extends State<NavigationBottom> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             RouteIconTopTextBottom(
-              svgIconPath: 'assets/svg/home.svg',
+              artboard: 'HOME',
               labelText: 'home',
-              width: 30,
+              width: 45,
+              height: 45,
               index: 0,
               func: () {
                 setState(() {
                   widget.selectedIndex == 0;
                 });
                 if (widget.selectedIndex != 0) {
-                  AutoRouter.of(context).push(const HomeRoute());
+                  AutoRouter.of(context).push(HomeRoute(userId: widget.userId));
                 }
               },
               isSelected: 0 == widget.selectedIndex,
+              rivePath: 'assets/rive/icons.riv',
             ),
             RouteIconTopTextBottom(
-              svgIconPath: 'assets/svg/news.svg',
+              artboard: 'NEWS',
               labelText: 'news',
-              width: 30,
               index: 1,
               func: () {
                 setState(() {
                   widget.selectedIndex == 1;
                 });
                 if (widget.selectedIndex != 1) {
-                  AutoRouter.of(context).push(const NewsRoute());
+                  AutoRouter.of(context).push(NewsRoute(userId: widget.userId));
                 }
               },
               isSelected: 1 == widget.selectedIndex,
+              rivePath: 'assets/rive/news.riv',
+              width: 45,
+              height: 45,
             ),
             RouteIconTopTextBottom(
-              svgIconPath: 'assets/svg/earn.svg',
+              artboard: 'EARN',
               labelText: 'earn',
-              width: 55,
               index: 2,
               func: () {
                 setState(() {
                   widget.selectedIndex == 2;
                 });
                 if (widget.selectedIndex != 2) {
-                  AutoRouter.of(context).push(const EarnRoute());
+                  AutoRouter.of(context).push(EarnRoute(userId: widget.userId));
                 }
               },
               isSelected: 2 == widget.selectedIndex,
+              rivePath: 'assets/rive/earn.riv',
+              width: 45,
+              height: 45,
             ),
             RouteIconTopTextBottom(
-              svgIconPath: 'assets/svg/profile.svg',
+              artboard: 'USER',
               labelText: 'profile',
-              width: 30,
               index: 3,
               func: () {
                 setState(() {
                   widget.selectedIndex == 3;
                 });
                 if (widget.selectedIndex != 3) {
-                  AutoRouter.of(context).push(const ProfileRoute());
+                  AutoRouter.of(context)
+                      .push(ProfileRoute(userId: widget.userId));
                 }
               },
               isSelected: 3 == widget.selectedIndex,
+              rivePath: 'assets/rive/icons.riv',
+              width: 45,
+              height: 45,
             ),
           ],
         ),

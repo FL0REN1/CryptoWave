@@ -62,7 +62,7 @@ class WelcomePage extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    'free 100 USDT after registration',
+                    'free 1000 USDT after registration',
                     style: theme.textTheme.labelSmall,
                   ),
                 ],

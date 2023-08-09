@@ -7,8 +7,10 @@ class CheckBox extends StatefulWidget {
     required this.labelText,
     required this.giveMeState,
     required this.onStateChanged,
+    required this.uriPath,
   });
 
+  final String uriPath;
   final String labelText;
   final bool giveMeState;
   final ValueChanged<bool> onStateChanged;
@@ -39,7 +41,7 @@ class _CheckBoxState extends State<CheckBox> {
         GestureDetector(
           onTap: () async {
             final url = Uri.parse(
-              'https://www.freeprivacypolicy.com/live/c84ab7c2-5fac-4b82-87e4-1d6d23184d7b',
+              widget.uriPath,
             );
             if (await canLaunchUrl(url)) {
               await launchUrl(url);

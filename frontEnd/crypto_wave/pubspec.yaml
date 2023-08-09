@@ -26,6 +26,8 @@ dependencies:
   flare_flutter: ^3.0.2
   flutter_shake_animated: ^0.0.5
   dropdown_button2: ^2.3.7
+  rive: ^0.11.10
+  flutter_animate: ^4.2.0+1
 
 dev_dependencies:
   flutter_test:
@@ -40,7 +42,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
-    - assets/flare/
+    - assets/rive/
   fonts:
     - family: Montserrat
       fonts:

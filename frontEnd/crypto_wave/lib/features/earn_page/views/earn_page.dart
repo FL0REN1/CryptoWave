@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class EarnPage extends StatelessWidget {
-  const EarnPage({super.key});
+  const EarnPage({super.key, required this.userId});
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class EarnPage extends StatelessWidget {
                     style: theme.textTheme.bodyLarge),
               ),
             ),
-            const NavigationBottom(selectedIndex: 2),
+            NavigationBottom(selectedIndex: 2, userId: userId),
           ],
         ),
       ),

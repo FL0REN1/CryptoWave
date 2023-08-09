@@ -42,20 +42,43 @@ class _SignUpPageState extends State<SignUpPage> {
         email: emailController.text,
         password: passwordController.text,
         isVerifiedMail: false,
-        isVerifiedUser: false,
+        isVerifiedUser: true,
       );
+      late WalletCreate walletUsdt;
+      late WalletCreate walletNull;
+
       await GetIt.I<AbstractUserRepository>()
           .checkUserLogin(userCheckLogin)
           .then((user) {
         if (user != null) {
+          walletUsdt = WalletCreate(
+            currencyCount: 1000,
+            currencyName: 'USDT',
+            userId: user.id,
+          );
+          walletNull = WalletCreate(
+            currencyCount: 1000,
+            currencyName: 'USDT',
+            userId: user.id,
+          );
           showErrorSnackBar(context, 'We already have the same user in our db');
         }
       }).catchError((e) {
         if (e is UserNotFoundException) {
           GetIt.I<AbstractUserRepository>().createUser(userCreate).then((user) {
-            AutoRouter.of(context).push(const HomeRoute());
+            AutoRouter.of(context).push(HomeRoute(userId: user.id));
             showSuccessToast(context, 'The creation of the user was successful',
                 ToastGravity.BOTTOM);
+          });
+          GetIt.I<AbstractWalletRepository>()
+              .createWallet(walletUsdt)
+              .then((user) {
+            AutoRouter.of(context).push(HomeRoute(userId: user.id));
+          });
+          GetIt.I<AbstractWalletRepository>()
+              .createWallet(walletNull)
+              .then((user) {
+            AutoRouter.of(context).push(HomeRoute(userId: user.id));
           });
         }
       });
@@ -155,6 +178,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 stateChecker = value;
               });
             },
+            uriPath:
+                'https://www.freeprivacypolicy.com/live/c84ab7c2-5fac-4b82-87e4-1d6d23184d7b',
           ),
           RoutedTextIconButton(
             routedButtonText: 'Create',
@@ -162,7 +187,7 @@ class _SignUpPageState extends State<SignUpPage> {
             width: double.infinity,
             flutterIcon: null,
             paddingVertical: 20,
-            paddingHorizontal: 100,
+            paddingHorizontal: 151,
           ),
         ],
       ),

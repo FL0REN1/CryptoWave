@@ -10,7 +10,7 @@ class Coin implements AbstractCoinsRepository {
   @override
   Future<List<Coins>> getCoinsList() async {
     final Response response = await dio.get(
-        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,USDT&tsyms=USD');
+        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,USDT&tsyms=USD');
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
 

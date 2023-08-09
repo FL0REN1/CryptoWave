@@ -100,9 +100,9 @@ class Notifications implements AbstractNotificationsRepository {
   }
 
   @override
-  Future<List<NotificationsRead>> getAllNotifications() async {
+  Future<List<NotificationsRead>> getAllNotifications(int userId) async {
     final Response response = await dio.get(
-      'http://10.0.2.2:5217/api/Notifications/all?userId=0',
+      'http://10.0.2.2:5217/api/Notifications/all?userId=$userId',
     );
     final List<dynamic> notificationsResponse = response.data;
     final List<NotificationsRead> notificationss = notificationsResponse
@@ -112,10 +112,9 @@ class Notifications implements AbstractNotificationsRepository {
   }
 
   @override
-  Future<List<NotificationsRead>> getUnReadNotifications(
-      int notificationsId) async {
+  Future<List<NotificationsRead>> getUnReadNotifications(int userId) async {
     final Response response = await dio.get(
-      'http://10.0.2.2:5217/api/Notifications/UnRead?userId=0',
+      'http://10.0.2.2:5217/api/Notifications/UnRead?userId=$userId',
     );
     final List<dynamic> notificationsResponse = response.data;
     final List<NotificationsRead> notificationss = notificationsResponse

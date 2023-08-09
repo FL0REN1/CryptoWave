@@ -10,11 +10,11 @@ import 'package:crypto_wave/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.userId});
+  final int userId;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,8 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _homeBloc.add(const LoadHome(completer: null, userId: 5));
-
+    _homeBloc.add(LoadHome(completer: null, userId: widget.userId));
     super.initState();
   }
 
@@ -49,7 +48,8 @@ class _HomePageState extends State<HomePage> {
         child: RefreshIndicator(
           onRefresh: () async {
             final completer = Completer();
-            _homeBloc.add(LoadHome(completer: completer, userId: 5));
+            _homeBloc
+                .add(LoadHome(completer: completer, userId: widget.userId));
             return completer.future;
           },
           child: BlocBuilder<HomeBloc, HomeState>(
@@ -57,8 +57,6 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state is HomeLoaded) {
                 final theme = Theme.of(context);
-                GetIt.I<Talker>().error('123');
-
                 final favoriteCoins = state.coins.where((coin) {
                   return state.wallets.any(
                     (wallet) =>
@@ -74,47 +72,52 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              margin: const EdgeInsets.only(bottom: 30),
+                              margin: const EdgeInsets.only(bottom: 20),
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 20),
                                       child: RoutedIconButton(
-                                        svgIconPath:
-                                            'assets/svg/booksquare.svg',
-                                        flutterIcon: null,
                                         padding: 4,
                                         func: () {
                                           AutoRouter.of(context).push(
                                             const TutorialRoute(),
                                           );
                                         },
+                                        artboard: 'ONLINE',
+                                        height: 100,
+                                        rivePath: 'assets/rive/icons_two.riv',
+                                        width: 100,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(right: 20),
                                     child: RoutedIconButton(
-                                      svgIconPath: 'assets/svg/search.svg',
-                                      flutterIcon: null,
                                       padding: 8,
                                       func: () {
                                         AutoRouter.of(context).push(
-                                          const SearchRoute(),
+                                          SearchRoute(userId: widget.userId),
                                         );
                                       },
+                                      artboard: 'SEARCH',
+                                      height: 45,
+                                      rivePath: 'assets/rive/icons.riv',
+                                      width: 45,
                                     ),
                                   ),
                                   RoutedIconButton(
-                                    svgIconPath: 'assets/svg/notification.svg',
-                                    flutterIcon: null,
                                     padding: 8,
                                     func: () {
                                       AutoRouter.of(context).push(
-                                        const NotificationsRoute(),
+                                        NotificationsRoute(userId: widget.userId),
                                       );
                                     },
+                                    artboard: 'BELL',
+                                    height: 45,
+                                    rivePath: 'assets/rive/icons.riv',
+                                    width: 45,
                                   ),
                                 ],
                               ),
@@ -177,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                   return CoinSmallContainer(
                                     coin: coin,
                                     currencyCode: coin.name,
-                                    userId: 5,
+                                    userId: widget.userId,
                                     currencyName: coin.name,
                                   );
                                 },
@@ -192,9 +195,9 @@ class _HomePageState extends State<HomePage> {
                         : const Spacer(
                             flex: 1,
                           ),
-                    const SizedBox(height: 10),
-                    const NavigationBottom(
+                    NavigationBottom(
                       selectedIndex: 0,
+                      userId: widget.userId,
                     ),
                   ],
                 );
@@ -203,7 +206,7 @@ class _HomePageState extends State<HomePage> {
               if (state is HomeLoadingFailure) {
                 return LoadingFailure(
                   restart: () => _homeBloc.add(
-                    const LoadHome(completer: null, userId: 5),
+                    LoadHome(completer: null, userId: widget.userId),
                   ),
                 );
               }

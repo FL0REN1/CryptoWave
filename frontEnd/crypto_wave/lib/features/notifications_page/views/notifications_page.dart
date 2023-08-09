@@ -11,7 +11,8 @@ import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key});
+  const NotificationsPage({super.key, required this.userId});
+  final int userId;
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -21,11 +22,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final _notificationsBloc = NotificationsBloc(
     GetIt.I<AbstractNotificationsRepository>(),
   );
-  late int userId;
   bool isContentLoaded = false;
+  late int userIdNonFinal = widget.userId;
+
   @override
   void initState() {
-    _notificationsBloc.add(const LoadNotifications(completer: null));
+    _notificationsBloc
+        .add(LoadNotifications(completer: null, userId: widget.userId));
     _notificationsBloc.stream.listen((state) {
       if (state is NotificationsLoaded) {
         setState(() {
@@ -45,7 +48,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return RefreshIndicator(
       onRefresh: () async {
         final completer = Completer();
-        _notificationsBloc.add(LoadNotifications(completer: completer));
+        _notificationsBloc.add(
+            LoadNotifications(completer: completer, userId: widget.userId));
         setState(() {
           isContentLoaded = false;
         });
@@ -66,8 +70,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     onPressed: () {
                       _notificationsBloc.add(
                         ChangeNotificationsAllToChoosen(
-                          userId: userId,
                           completer: null,
+                          userId: widget.userId,
                         ),
                       );
                     },
@@ -79,8 +83,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     onPressed: () {
                       _notificationsBloc.add(
                         DeleteNotificationsChoosen(
-                          userId: userId,
                           completer: null,
+                          userId: widget.userId,
                         ),
                       );
                     },
@@ -101,7 +105,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     final message = state.notifications[index];
                     bool isLastElement =
                         index == state.notifications.length - 1;
-                    userId = message.userId;
+                    userIdNonFinal = message.userId;
                     return Container(
                       margin: isLastElement
                           ? EdgeInsets.zero
@@ -120,6 +124,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               ChangeNotificationToChoosen(
                                 id: message.id,
                                 completer: null,
+                                userId: widget.userId,
                               ),
                             );
                           });
@@ -134,7 +139,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 isContentLoaded = false;
                 return LoadingFailure(
                   restart: () => _notificationsBloc.add(
-                    const LoadNotifications(completer: null),
+                    LoadNotifications(completer: null, userId: widget.userId),
                   ),
                 );
               }

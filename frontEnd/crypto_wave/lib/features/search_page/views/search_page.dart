@@ -12,7 +12,8 @@ import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  const SearchPage({super.key, required this.userId});
+  final int userId;
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -91,7 +92,7 @@ class _SearchPageState extends State<SearchPage> {
                           return CoinSmallContainer(
                             coin: coin,
                             currencyCode: coin.name,
-                            userId: 5,
+                            userId: widget.userId,
                             currencyName: coin.name,
                           );
                         },

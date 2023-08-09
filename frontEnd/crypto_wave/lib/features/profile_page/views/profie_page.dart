@@ -14,7 +14,8 @@ import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required this.userId});
+  final int userId;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -29,9 +30,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    _profileBloc.add(const LoadProfile(completer: null, userId: 5));
+    _profileBloc.add(LoadProfile(completer: null, userId: widget.userId));
 
-    _profileBloc.startUpdatingWallet(userId: 5);
+    _profileBloc.startUpdatingWallet(userId: widget.userId);
 
     super.initState();
   }
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: RefreshIndicator(
           onRefresh: () async {
             final completer = Completer();
-            _profileBloc.add(LoadProfile(completer: completer, userId: 5));
+            _profileBloc.add(LoadProfile(completer: completer, userId: widget.userId));
             return completer.future;
           },
           child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -150,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return CoinSmallContainer(
                                   coin: coin,
                                   currencyCode: coin.name,
-                                  userId: 5,
+                                  userId: widget.userId,
                                   currencyName: coin.name,
                                 );
                               },
@@ -160,8 +161,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     const Spacer(),
-                    const NavigationBottom(
+                    NavigationBottom(
                       selectedIndex: 3,
+                      userId: widget.userId,
                     ),
                   ],
                 );
@@ -170,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
               if (state is ProfileLoadingFailure) {
                 return LoadingFailure(
                   restart: () => _profileBloc.add(
-                    const LoadProfile(completer: null, userId: 5),
+                    LoadProfile(completer: null, userId: widget.userId),
                   ),
                 );
               }

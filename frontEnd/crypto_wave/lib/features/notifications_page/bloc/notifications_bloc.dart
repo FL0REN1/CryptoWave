@@ -34,7 +34,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       }
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {
@@ -59,7 +59,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           .changeToChoosenNotification(notificationsChangeToChoosen);
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {
@@ -84,7 +84,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           .changeAllToChoosenNotifications(notificationsChangeAllToChoosen);
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {
@@ -109,7 +109,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           .changeAllNotificationsToRead(notificationsChangeAllToRead);
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {
@@ -157,7 +157,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           .deleteAllNotifications(deleteNotificationsAll);
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {
@@ -182,7 +182,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           .deleteChoosenNotifications(deleteNotificationsAll);
 
       final notificationsList =
-          await notificationsRepository.getAllNotifications();
+          await notificationsRepository.getAllNotifications(event.userId);
 
       emit(NotificationsLoaded(notifications: notificationsList));
     } catch (e, st) {

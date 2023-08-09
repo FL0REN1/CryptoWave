@@ -11,7 +11,8 @@ import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class NewsPage extends StatefulWidget {
-  const NewsPage({super.key});
+  const NewsPage({super.key, required this.userId});
+  final int userId;
 
   @override
   State<NewsPage> createState() => _NewsPageState();
@@ -62,8 +63,9 @@ class _NewsPageState extends State<NewsPage> {
                       },
                     ),
                     const Spacer(),
-                    const NavigationBottom(
+                    NavigationBottom(
                       selectedIndex: 1,
+                      userId: widget.userId,
                     ),
                   ],
                 );

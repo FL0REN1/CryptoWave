@@ -7,14 +7,14 @@ part of 'wallet_buy.dart';
 // **************************************************************************
 
 WalletBuy _$WalletBuyFromJson(Map<String, dynamic> json) => WalletBuy(
-      currencyCount: (json['currencyCount'] as num).toDouble(),
-      currencyToBuy: json['currencyToBuy'] as String,
-      currencyToSell: json['currencyToSell'] as String,
-      userId: json['userId'] as int,
+      currencyCount: (json['currencyCount'] as num?)?.toDouble(),
+      currencyToBuy: json['currencyToBuy'] as String?,
+      currencyToSell: json['currencyToSell'] as String?,
       currencyToBuyPriceInUsd:
-          (json['currencyToBuyPriceInUsd'] as num).toDouble(),
+          (json['currencyToBuyPriceInUsd'] as num?)?.toDouble(),
       currencyToSellPriceInUsd:
-          (json['currencyToSellPriceInUsd'] as num).toDouble(),
+          (json['currencyToSellPriceInUsd'] as num?)?.toDouble(),
+      userId: json['userId'] as int,
     );
 
 Map<String, dynamic> _$WalletBuyToJson(WalletBuy instance) => <String, dynamic>{

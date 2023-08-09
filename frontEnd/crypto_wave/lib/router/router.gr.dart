@@ -34,39 +34,63 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EarnRoute.name: (routeData) {
+      final args = routeData.argsAs<EarnRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EarnPage(),
+        child: EarnPage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
+      final args = routeData.argsAs<HomeRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomePage(),
+        child: HomePage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     NewsRoute.name: (routeData) {
+      final args = routeData.argsAs<NewsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const NewsPage(),
+        child: NewsPage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     NotificationsRoute.name: (routeData) {
+      final args = routeData.argsAs<NotificationsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const NotificationsPage(),
+        child: NotificationsPage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     ProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ProfilePage(),
+        child: ProfilePage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     SearchRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchPage(),
+        child: SearchPage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
     TutorialRoute.name: (routeData) {
@@ -147,86 +171,226 @@ class CoinRouteArgs {
 
 /// generated route for
 /// [EarnPage]
-class EarnRoute extends PageRouteInfo<void> {
-  const EarnRoute({List<PageRouteInfo>? children})
-      : super(
+class EarnRoute extends PageRouteInfo<EarnRouteArgs> {
+  EarnRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           EarnRoute.name,
+          args: EarnRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EarnRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<EarnRouteArgs> page = PageInfo<EarnRouteArgs>(name);
+}
+
+class EarnRouteArgs {
+  const EarnRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'EarnRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
 /// [HomePage]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
+class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           HomeRoute.name,
+          args: HomeRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'HomeRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<HomeRouteArgs> page = PageInfo<HomeRouteArgs>(name);
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
 /// [NewsPage]
-class NewsRoute extends PageRouteInfo<void> {
-  const NewsRoute({List<PageRouteInfo>? children})
-      : super(
+class NewsRoute extends PageRouteInfo<NewsRouteArgs> {
+  NewsRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           NewsRoute.name,
+          args: NewsRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'NewsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<NewsRouteArgs> page = PageInfo<NewsRouteArgs>(name);
+}
+
+class NewsRouteArgs {
+  const NewsRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'NewsRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
 /// [NotificationsPage]
-class NotificationsRoute extends PageRouteInfo<void> {
-  const NotificationsRoute({List<PageRouteInfo>? children})
-      : super(
+class NotificationsRoute extends PageRouteInfo<NotificationsRouteArgs> {
+  NotificationsRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           NotificationsRoute.name,
+          args: NotificationsRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'NotificationsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<NotificationsRouteArgs> page =
+      PageInfo<NotificationsRouteArgs>(name);
+}
+
+class NotificationsRouteArgs {
+  const NotificationsRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'NotificationsRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
 /// [ProfilePage]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
-      : super(
+class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           ProfileRoute.name,
+          args: ProfileRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ProfileRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ProfileRouteArgs> page =
+      PageInfo<ProfileRouteArgs>(name);
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
 /// [SearchPage]
-class SearchRoute extends PageRouteInfo<void> {
-  const SearchRoute({List<PageRouteInfo>? children})
-      : super(
+class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
+  SearchRoute({
+    Key? key,
+    required int userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           SearchRoute.name,
+          args: SearchRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SearchRouteArgs> page = PageInfo<SearchRouteArgs>(name);
+}
+
+class SearchRouteArgs {
+  const SearchRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final int userId;
+
+  @override
+  String toString() {
+    return 'SearchRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for

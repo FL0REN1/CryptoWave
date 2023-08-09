@@ -18,11 +18,11 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         // Welcome / Autorization
-        AutoRoute(page: WelcomeRoute.page),
+        AutoRoute(page: WelcomeRoute.page, path: '/'),
         AutoRoute(page: AutorizationRoute.page),
 
         // Home
-        AutoRoute(page: HomeRoute.page, path: '/'),
+        AutoRoute(page: HomeRoute.page),
         AutoRoute(page: TutorialRoute.page),
         AutoRoute(page: SearchRoute.page),
         AutoRoute(page: NotificationsRoute.page),

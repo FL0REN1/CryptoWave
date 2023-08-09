@@ -9,11 +9,12 @@ abstract class NotificationsEvent extends Equatable {
 
 class LoadNotifications extends NotificationsEvent {
   final Completer? completer;
+  final int userId;
 
-  const LoadNotifications({required this.completer});
+  const LoadNotifications({required this.completer, required this.userId});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [userId];
 }
 
 class DeleteNotificationById extends NotificationsEvent {
@@ -50,12 +51,13 @@ class DeleteNotificationsChoosen extends NotificationsEvent {
 class ChangeNotificationToChoosen extends NotificationsEvent {
   final int id;
   final Completer? completer;
+  final int userId;
 
   const ChangeNotificationToChoosen(
-      {required this.id, required this.completer});
+      {required this.id, required this.completer, required this.userId});
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, userId];
 }
 
 class ChangeNotificationsAllToChoosen extends NotificationsEvent {

@@ -29,7 +29,7 @@ class _LogInPageState extends State<LogInPage> {
           .then((user) {
         showSuccessToast(
             context, 'Account log In was successful', ToastGravity.BOTTOM);
-        AutoRouter.of(context).push(const HomeRoute());
+        AutoRouter.of(context).push(HomeRoute(userId: user!.id));
       }).catchError(
         (error) {
           showErrorSnackBar(context, 'User not found');
@@ -83,7 +83,7 @@ class _LogInPageState extends State<LogInPage> {
             onPressed: () => onLogInClick(context),
             width: double.infinity,
             flutterIcon: null,
-            paddingHorizontal: 20,
+            paddingHorizontal: 153,
             paddingVertical: 20,
           ),
         ],

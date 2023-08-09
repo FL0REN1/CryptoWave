@@ -99,7 +99,7 @@ class _CoinPageState extends State<CoinPage> {
             onPressed: () {
               if (AutoRouter.of(context).currentPath != '/') {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const HomePage(),
+                  builder: (context) => HomePage(userId: widget.userId),
                 ));
               } else {
                 Navigator.of(context).pop();
