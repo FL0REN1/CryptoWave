@@ -51,31 +51,32 @@ class _SignUpPageState extends State<SignUpPage> {
           .checkUserLogin(userCheckLogin)
           .then((user) {
         if (user != null) {
-          walletUsdt = WalletCreate(
-            currencyCount: 1000,
-            currencyName: 'USDT',
-            userId: user.id,
-          );
-          walletNull = WalletCreate(
-            currencyCount: 1000,
-            currencyName: 'USDT',
-            userId: user.id,
-          );
           showErrorSnackBar(context, 'We already have the same user in our db');
         }
-      }).catchError((e) {
+      }).catchError((e) async {
         if (e is UserNotFoundException) {
-          GetIt.I<AbstractUserRepository>().createUser(userCreate).then((user) {
-            AutoRouter.of(context).push(HomeRoute(userId: user.id));
+          await GetIt.I<AbstractUserRepository>()
+              .createUser(userCreate)
+              .then((user) {
             showSuccessToast(context, 'The creation of the user was successful',
                 ToastGravity.BOTTOM);
           });
-          GetIt.I<AbstractWalletRepository>()
-              .createWallet(walletUsdt)
+          await GetIt.I<AbstractUserRepository>()
+              .checkUserLogin(userCheckLogin)
               .then((user) {
-            AutoRouter.of(context).push(HomeRoute(userId: user.id));
+            walletUsdt = WalletCreate(
+              currencyCount: 1000,
+              currencyName: 'USDT',
+              userId: user!.id,
+            );
+            walletNull = WalletCreate(
+              currencyCount: 0,
+              currencyName: 'NULL_COIN',
+              userId: user.id,
+            );
           });
-          GetIt.I<AbstractWalletRepository>()
+          await GetIt.I<AbstractWalletRepository>().createWallet(walletUsdt);
+          await GetIt.I<AbstractWalletRepository>()
               .createWallet(walletNull)
               .then((user) {
             AutoRouter.of(context).push(HomeRoute(userId: user.id));
