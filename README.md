@@ -19,7 +19,7 @@ Welcome to CryptoWave, an innovative cryptocurrency exchange platform designed t
 - • **Market Section:** The market page showcases an extensive list of available cryptocurrencies for trading, empowering users with a diverse range of options.
 
 - **News Page:** System Announcements: Users receive updates about upcoming events in the cryptocurrency world and platform-specific developments.
-- **Earn Page:**This section, currently in development, promises exciting opportunities for users to explore and grow their cryptocurrency holdings.
+- **Earn Page:** This section, currently in development, promises exciting opportunities for users to explore and grow their cryptocurrency holdings.
 - **Profile Page:**
 • **Cryptocurrency Statistics:** Users gain access to detailed statistics about their cryptocurrency holdings, enhancing their trading decisions.
 • **Wallet Information:** A secure display of wallet data allows users to monitor their assets closely.
